@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs & Models
+logs/
+models/
+*.log
+*.joblib
+
+# Virtual Envs
+.env
+.venv/
