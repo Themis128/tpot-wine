@@ -41,7 +41,6 @@ if "selected_model_path" not in st.session_state:
                 best_row = df.sort_values(by=sort_col, ascending=False).iloc[0]
                 return best_row["model_path"], best_row["region"]
         return None, None
-
     model_path, best_region = get_best_model(st.session_state.selected_task)
     st.session_state.selected_model_path = model_path
     st.session_state.selected_region = best_region
@@ -124,7 +123,6 @@ def render_leaderboard_tab():
 # === Climate Simulation Tab ===
 def render_climate_simulation_tab():
     st.header("Climate Simulation")
-
     mt = st.slider("Mean Temperature (°C)", 20.0, 26.0, 22.5, 0.1)
     mrh = st.slider("Relative Humidity (%)", 50.0, 75.0, 60.0, 0.5)
 
@@ -193,7 +191,7 @@ def render_prediction_tab():
     features = df.select_dtypes(include=[float, int]).drop(columns=[TARGET_COL], errors="ignore")
 
     st.subheader("Predict from Row")
-    row_index = st.slider("Choose Row", 0, len(features)-1)
+    row_index = st.slider("Choose Row", 0, len(features) - 1)
     row = features.iloc[row_index]
     st.write(row)
     pred = model.predict(row.values.reshape(1, -1))[0]
@@ -230,16 +228,13 @@ def render_reports_tab():
 
 # === Tabs ===
 tab1, tab2, tab3, tab4 = st.tabs(["Leaderboard", "Climate Simulation", "Prediction", "Reports"])
-with tab1:
-    render_leaderboard_tab()
-with tab2:
-    render_climate_simulation_tab()
-with tab3:
-    render_prediction_tab()
-with tab4:
-    render_reports_tab()
 
-# === Debug Logs Expander ===
+with tab1: render_leaderboard_tab()
+with tab2: render_climate_simulation_tab()
+with tab3: render_prediction_tab()
+with tab4: render_reports_tab()
+
+# === Debug Logs ===
 with st.expander("Debug Logs"):
     for line in st.session_state.logs[-100:]:
         st.text(line)
