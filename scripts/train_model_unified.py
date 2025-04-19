@@ -19,37 +19,6 @@ POPULATION_SIZE = 20
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# === TPOT Configuration ===
-regressor_config_dict = {
-    'sklearn.ensemble.RandomForestRegressor': {
-        'n_estimators': [100],
-        'max_features': ['auto'],
-        'min_samples_split': [2],
-        'min_samples_leaf': [1],
-        'bootstrap': [True]
-    },
-    'sklearn.linear_model.Ridge': {'alpha': [0.1, 1.0, 10.0]},
-    'sklearn.tree.DecisionTreeRegressor': {
-        'max_depth': [3, 5, None],
-        'min_samples_split': [2],
-        'min_samples_leaf': [1]
-    }
-}
-
-classifier_config_dict = {
-    'sklearn.ensemble.RandomForestClassifier': {
-        'n_estimators': [100],
-        'max_features': ['auto'],
-        'min_samples_split': [2],
-        'min_samples_leaf': [1],
-        'bootstrap': [True]
-    },
-    'sklearn.linear_model.LogisticRegression': {
-        'C': [1.0],
-        'solver': ['liblinear']
-    }
-}
-
 # === Logging ===
 def setup_logging(verbose=False):
     now = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -65,34 +34,37 @@ def setup_logging(verbose=False):
     )
     logging.info(f"Logging to file: {log_file}")
 
-# === Training Function ===
+# === Training ===
 def train_model(file_path, task):
-    region = os.path.basename(file_path).replace("combined_", "").replace(".csv", "")
+    region = os.path.basename(file_path).replace("combined_", "").replace("_filled.csv", "")
+    model_id = f"combined_{region}_filled"
     logging.info(f"[{region}] ▶ Starting training ({task})")
+
     try:
         df = pd.read_csv(file_path)
         if "wine_quality_score" not in df.columns:
             raise ValueError("Missing target column: wine_quality_score")
+
         X, y = preprocess_data(df)
         X_train, y_train, X_test, y_test = split_and_resample(X, y)
 
         model_cls = TPOTRegressor if task == "regression" else TPOTClassifier
-        config_dict = regressor_config_dict if task == "regression" else classifier_config_dict
 
         model = model_cls(
             generations=GENERATIONS,
             population_size=POPULATION_SIZE,
             max_time_mins=MAX_TIME_MINS,
-            config_dict=config_dict,
+            search_space="linear",
+            cv=5,
             random_state=42,
-            n_jobs=-1,
-            verbosity=2
+            n_jobs=1,
+            verbose=2
         )
 
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
 
-        metrics = {"region": region}
+        metrics = {"region": model_id}
         if task == "regression":
             metrics["r2"] = round(r2_score(y_test, y_pred), 4)
             metrics["rmse"] = round(mean_squared_error(y_test, y_pred, squared=False), 4)
@@ -101,16 +73,17 @@ def train_model(file_path, task):
             metrics["accuracy"] = round(accuracy_score(y_test, y_pred), 4)
             logging.info(f"[{region}] Accuracy: {metrics['accuracy']:.4f}")
 
-        model_path = save_model(model.fitted_pipeline_, OUTPUT_DIR, region)
+        model_path = save_model(model.fitted_pipeline_, OUTPUT_DIR, model_id)
         metrics["model_path"] = model_path
-        logging.info(f"[{region}] ✅ Model saved: {model_path}")
+        logging.info(f"[{region}] ✅   Model saved: {model_path}")
+
         return metrics
 
     except Exception as e:
-        logging.error(f"[{region}] ❌ Error: {e}")
+        logging.error(f"[{region}] ❌     Error: {e}")
         return None
 
-# === Entry Point ===
+# === Main Runner ===
 def main(task, verbose, leaderboard_dir):
     setup_logging(verbose)
     leaderboard_file = os.path.join(leaderboard_dir, f"leaderboard_{task}.csv")
@@ -118,7 +91,7 @@ def main(task, verbose, leaderboard_dir):
 
     files = [f for f in os.listdir(DATA_DIR) if f.startswith("combined_") and f.endswith(".csv")]
     logging.info(f"Found {len(files)} datasets for task: {task}")
-    
+
     results = []
     for file in files:
         full_path = os.path.join(DATA_DIR, file)

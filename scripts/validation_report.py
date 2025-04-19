@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 from datetime import datetime
-from scripts.utils.utils import generate_pdf_from_dict
+from scripts.utils.utils import generate_pdf_from_dict  # used only if fallback needed
 
 # === Paths ===
 LOG_DIR = "logs"
@@ -11,6 +11,7 @@ LEADERBOARD_FILES = {
     "Classification": os.path.join(LOG_DIR, "leaderboard_classification.csv")
 }
 OUTPUT_PATH = os.path.join(LOG_DIR, "validation_report.pdf")
+TMP_HTML = "tmp_validation.html"
 
 def collect_summary(df, task):
     summary = {
@@ -27,14 +28,15 @@ def collect_summary(df, task):
 
     sort_metric = "accuracy" if "accuracy" in df.columns else "r2"
     best = df.sort_values(by=sort_metric, ascending=False).iloc[0]
-    summary["Top Region"] = best["region"]
+    summary["Top Region"] = best.get("region", "N/A")
     summary["Top Score"] = round(best.get(sort_metric, 0.0), 4)
     summary["Model Path"] = best.get("model_path", "N/A")
 
-    return summary, df[["region", "accuracy", "r2", "rmse", "timestamp"]].fillna("").to_dict(orient="records")
+    display_columns = [c for c in ["region", "accuracy", "r2", "rmse", "timestamp"] if c in df.columns]
+    return summary, df[display_columns].fillna("").to_dict(orient="records")
 
 def main():
-    full_html = "<html><body><h1>Wine Quality Validation Report</h1>"
+    full_html = "<html><head><meta charset='utf-8'></head><body><h1>Wine Quality Validation Report</h1>"
 
     for task_name, path in LEADERBOARD_FILES.items():
         if not os.path.exists(path):
@@ -47,6 +49,7 @@ def main():
             continue
 
         summary, table = collect_summary(df, task_name)
+
         html_section = f"<h2>{task_name} Summary</h2><ul>"
         for k, v in summary.items():
             html_section += f"<li><b>{k}:</b> {v}</li>"
@@ -58,19 +61,26 @@ def main():
             for row in table:
                 html_section += "<tr>" + ''.join(f"<td>{row[col]}</td>" for col in columns) + "</tr>"
             html_section += "</table>"
+
         full_html += html_section
 
     full_html += "</body></html>"
 
-    with open("tmp_validation.html", "w") as f:
+    # Save HTML
+    with open(TMP_HTML, "w", encoding="utf-8") as f:
         f.write(full_html)
 
+    # Convert to PDF
     try:
         import pdfkit
-        pdfkit.from_file("tmp_validation.html", OUTPUT_PATH)
+        pdfkit.from_file(TMP_HTML, OUTPUT_PATH)
         print(f"✅ Validation report saved to: {OUTPUT_PATH}")
     except Exception as e:
-        print(f"❌ Error generating PDF: {e}")
+        print(f"❌ Error generating PDF with pdfkit: {e}")
+        print("Fallback: saving as raw HTML only.")
+        fallback_html = os.path.join(LOG_DIR, "validation_report.html")
+        os.rename(TMP_HTML, fallback_html)
+        print(f"HTML saved instead: {fallback_html}")
 
 if __name__ == "__main__":
     main()

@@ -1,78 +1,80 @@
-import os, joblib, logging
+import os
+import joblib
 import pandas as pd
 from datetime import datetime
-from sklearn.metrics import accuracy_score, r2_score
-from scripts.utils.preprocessing import preprocess_data
+from scripts.utils.utils import preprocess_data, split_and_resample, generate_combined_validation_pdf
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE, "data", "processed_filled")
-MODEL_DIR = os.path.join(BASE, "models")
-LOG_DIR = os.path.join(BASE, "logs")
-LEADERBOARD_PATH = os.path.join(LOG_DIR, "leaderboard.csv")
+LOG_DIR = "logs"
+MODEL_DIR = "models"
+DATA_DIR = "data"
+
 os.makedirs(LOG_DIR, exist_ok=True)
-log_path = os.path.join(LOG_DIR, f"validation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
-logging.basicConfig(filename=log_path, level=logging.INFO, format="%(message)s")
-print(f"Validation log: {log_path}")
 
-def validate_model(model_path, dataset_path):
+def validate_model(model_path, data_path):
     try:
-        region = os.path.basename(model_path).replace(".joblib", "")
         model = joblib.load(model_path)
-        df = pd.read_csv(dataset_path)
-        if "wine_quality_score" not in df.columns:
-            raise ValueError("Missing target column.")
+        df = pd.read_csv(data_path)
         X, y = preprocess_data(df)
-        y_pred = model.predict(X)
-        result = {
-            "region": region,
-            "model_path": model_path,
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M")
-        }
-        if y.dtype.kind in "ifu":
-            result["r2"] = round(r2_score(y, y_pred), 4)
-            result["score_type"] = "r2"
-            logging.info(f"[{region}] R²: {result['r2']}")
-        else:
-            result["accuracy"] = round(accuracy_score(y, y_pred), 4)
-            result["score_type"] = "accuracy"
-            logging.info(f"[{region}] Accuracy: {result['accuracy']}")
-        return result
+        _, _, X_test, y_test = split_and_resample(X, y)
+        score = model.score(X_test, y_test)
+        return score
     except Exception as e:
-        logging.error(f"[{model_path}] ❌  {e}")
-        return {"region": region, "error": str(e)}
-
-def update_leaderboard(results):
-    try:
-        if os.path.exists(LEADERBOARD_PATH):
-            current = pd.read_csv(LEADERBOARD_PATH)
-            current = current[~current["region"].isin([e["region"] for e in results])]
-            updated = pd.concat([current, pd.DataFrame(results)], ignore_index=True)
-        else:
-            updated = pd.DataFrame(results)
-        updated.to_csv(LEADERBOARD_PATH, index=False)
-        print("✅ Leaderboard updated.")
-    except Exception as e:
-        print(f"⚠️ Failed to update leaderboard: {e}")
+        print(f"❌ Error validating {model_path}: {e}")
+        return None
 
 def main():
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = os.path.join(LOG_DIR, f"validation_{timestamp}.log")
+    print(f"Validation log: {log_file}")
+
+    leaderboard_path = os.path.join(LOG_DIR, "leaderboard_r2.csv")
+    results = []
+
     print("▶ Validating models...")
-    entries = []
-    for model_file in os.listdir(MODEL_DIR):
-        if not model_file.endswith(".joblib"): continue
-        region = model_file.replace(".joblib", "")
-        data_file = f"combined_{region}_filled.csv"
-        model_path = os.path.join(MODEL_DIR, model_file)
-        dataset_path = os.path.join(DATA_DIR, data_file)
-        if not os.path.exists(dataset_path):
-            logging.warning(f"[{region}] Missing dataset.")
+    for fname in os.listdir(MODEL_DIR):
+        if not fname.endswith(".joblib"):
             continue
-        result = validate_model(model_path, dataset_path)
-        if "error" not in result:
-            entries.append(result)
-    if entries:
-        update_leaderboard(entries)
+
+        model_name = fname.replace(".joblib", "")
+        model_path = os.path.join(MODEL_DIR, fname)
+        data_name = model_name + "_filled.csv"
+        data_path = os.path.join(DATA_DIR, data_name)
+
+        if not os.path.exists(data_path):
+            print(f"⚠️  Skipping {fname} — data file missing: {data_name}")
+            continue
+
+        score = validate_model(model_path, data_path)
+        if score is not None:
+            print(f"[{model_name}] R²: {round(score, 4)}")
+            results.append({
+                "region": model_name,
+                "model_path": model_path,
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "r2": round(score, 4),
+                "score_type": "r2"
+            })
+
+    if results:
+        pd.DataFrame(results).to_csv(leaderboard_path, index=False)
+        print(f"✅   Leaderboard updated: {leaderboard_path}")
     else:
-        print("⚠️ No valid results.")
+        print("⚠️  No valid results.")
+
+    # === Master Summary Generation ===
+    leaderboards = {
+        "R2": leaderboard_path,
+        # Add other metrics as needed
+    }
+
+    leaderboards = {k: v for k, v in leaderboards.items() if os.path.exists(v)}
+
+    if leaderboards:
+        master_pdf = os.path.join(LOG_DIR, "validation_master_report.pdf")
+        generate_combined_validation_pdf(leaderboards, master_pdf)
+        print(f"\n✅ Master summary saved: {master_pdf}")
+    else:
+        print("\n⚠️ No leaderboard data found — master summary not generated.")
 
 if __name__ == "__main__":
     main()

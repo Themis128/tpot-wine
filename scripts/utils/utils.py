@@ -13,7 +13,6 @@ import pdfkit
 # ===================================
 # Data Preprocessing Utilities
 # ===================================
-
 def preprocess_data(df):
     y = df["wine_quality_score"]
     X = df.drop(columns=["wine_quality_score", "date"], errors="ignore")
@@ -42,7 +41,6 @@ def split_and_resample(X, y):
 # ===================================
 # Model Saving Utility (with versioning)
 # ===================================
-
 def save_model(pipeline, model_dir, region, versioned=True, update_latest=True):
     os.makedirs(model_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -57,29 +55,20 @@ def save_model(pipeline, model_dir, region, versioned=True, update_latest=True):
         if os.path.islink(latest_link) or os.path.exists(latest_link):
             os.remove(latest_link)
         os.symlink(os.path.abspath(model_path), latest_link)
+
     return model_path
 
 # ===================================
 # PDF Report Generation
 # ===================================
-
 def generate_pdf_from_dict(title, data_dict, filename="report.pdf", table_data=None, table_title=None):
     html = f"""
     <html>
     <head>
         <style>
-            h1 {{
-                color: #4CAF50;
-            }}
-            table {{
-                border-collapse: collapse;
-                width: 100%;
-            }}
-            th, td {{
-                text-align: left;
-                padding: 8px;
-                border: 1px solid #ddd;
-            }}
+            h1 {{ color: #4CAF50; }}
+            table {{ border-collapse: collapse; width: 100%; }}
+            th, td {{ text-align: left; padding: 8px; border: 1px solid #ddd; }}
             tr:nth-child(even) {{ background-color: #f2f2f2 }}
         </style>
     </head>
@@ -93,14 +82,14 @@ def generate_pdf_from_dict(title, data_dict, filename="report.pdf", table_data=N
 
     if table_data:
         html += f"<h2>{table_title or 'Details'}</h2><table>"
-        if table_data:
-            headers = table_data[0].keys()
-            html += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>"
-            for row in table_data:
-                html += "<tr>" + "".join(f"<td>{row.get(col, '')}</td>" for col in headers) + "</tr>"
+        headers = table_data[0].keys()
+        html += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>"
+        for row in table_data:
+            html += "<tr>" + "".join(f"<td>{row.get(col, '')}</td>" for col in headers) + "</tr>"
         html += "</table>"
 
     html += "</body></html>"
+
     pdfkit.from_string(html, filename)
     return os.path.abspath(filename)
 
@@ -116,7 +105,6 @@ def generate_combined_validation_pdf(leaderboard_paths_dict, output_file="combin
             continue
 
         summary_data[f"{label} - Total Models"] = len(df)
-
         if "accuracy" in df.columns:
             summary_data[f"{label} - Avg Accuracy"] = round(df["accuracy"].mean(), 4)
         if "r2" in df.columns:
@@ -132,7 +120,6 @@ def generate_combined_validation_pdf(leaderboard_paths_dict, output_file="combin
         table_cols = [c for c in ["region", "accuracy", "r2", "rmse", "timestamp"] if c in df.columns]
         all_tables[label] = df[table_cols].fillna("").to_dict(orient="records")
 
-    # Flatten the tables into one section
     combined_table = []
     for section, records in all_tables.items():
         for row in records:
