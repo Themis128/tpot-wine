@@ -1,0 +1,33 @@
+name,model_type,metric_type,metric_value,train_time
+1_DecisionTree,Decision Tree,accuracy,0.7246376811594203,4.2
+2_DecisionTree,Decision Tree,accuracy,0.8043478260869565,3.65
+3_DecisionTree,Decision Tree,accuracy,0.7971014492753623,3.78
+4_Linear,Linear,accuracy,0.8260869565217391,8.47
+5_Default_LightGBM,LightGBM,accuracy,0.8623188405797102,6.21
+6_Default_Xgboost,Xgboost,accuracy,0.8478260869565217,9.09
+7_Default_CatBoost,CatBoost,accuracy,0.8913043478260869,51.7
+8_Default_NeuralNetwork,Neural Network,accuracy,0.782608695652174,5.78
+9_Default_RandomForest,Random Forest,accuracy,0.8260869565217391,11.57
+10_Default_ExtraTrees,Extra Trees,accuracy,0.8623188405797102,10.73
+20_LightGBM,LightGBM,accuracy,0.8188405797101449,6.06
+11_Xgboost,Xgboost,accuracy,0.8405797101449275,8.4
+29_CatBoost,CatBoost,accuracy,0.8405797101449275,15.08
+38_RandomForest,Random Forest,accuracy,0.8478260869565217,11.98
+47_ExtraTrees,Extra Trees,accuracy,0.8768115942028986,11.6
+56_NeuralNetwork,Neural Network,accuracy,0.34057971014492755,6.81
+21_LightGBM,LightGBM,accuracy,0.8768115942028986,7.56
+12_Xgboost,Xgboost,accuracy,0.855072463768116,13.42
+30_CatBoost,CatBoost,accuracy,0.8623188405797102,33.76
+39_RandomForest,Random Forest,accuracy,0.8405797101449275,13.24
+48_ExtraTrees,Extra Trees,accuracy,0.8333333333333334,12.27
+57_NeuralNetwork,Neural Network,accuracy,0.782608695652174,8.0
+22_LightGBM,LightGBM,accuracy,0.8405797101449275,7.96
+13_Xgboost,Xgboost,accuracy,0.15217391304347827,8.64
+31_CatBoost,CatBoost,accuracy,0.8768115942028986,102.4
+40_RandomForest,Random Forest,accuracy,0.8260869565217391,14.44
+49_ExtraTrees,Extra Trees,accuracy,0.8043478260869565,12.92
+58_NeuralNetwork,Neural Network,accuracy,0.7463768115942029,8.84
+23_LightGBM,LightGBM,accuracy,0.8695652173913043,10.13
+14_Xgboost,Xgboost,accuracy,0.16666666666666666,8.93
+32_CatBoost,CatBoost,accuracy,0.8913043478260869,91.47
+41_RandomForest,Random Forest,accuracy,0.6666666666666666,15.24

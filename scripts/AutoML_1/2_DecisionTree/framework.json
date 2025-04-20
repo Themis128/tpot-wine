@@ -1,0 +1,677 @@
+{
+    "uid": "603188f0-cbf3-4d74-9abf-42537ecf13d9",
+    "name": "2_DecisionTree",
+    "preprocessing": [
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        }
+    ],
+    "learners": [
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "14f1d758-c5f4-448b-a342-e85f36b69f85",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_0"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "8ad39d42-2660-4adf-aa0c-434e82bfedc0",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_1"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "4d8ee174-254d-4380-93c2-8a6b52e78bfc",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_2"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "7c5a0825-cb4c-435e-9285-361955b0e1e9",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_3"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "f693c65b-56aa-4103-bc1f-1c4111da53e7",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_4"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "68946a70-d0fc-42fc-b666-c9c5e42c94d6",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_5"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "0e8aae4f-0377-4830-b222-7140e6180b24",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_6"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "4a7c94a8-0a32-40e7-9701-f4241bbbe0f0",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_7"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "67cf77f2-113a-4f17-9cc0-4bab0ca11bf6",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_8"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Decision Tree",
+            "algorithm_short_name": "Decision Tree",
+            "uid": "7754e9b6-ce67-49a8-a8f2-4b4d0edefd4e",
+            "params": {
+                "model_type": "Decision Tree",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1236,
+                "criterion": "gini",
+                "max_depth": 4,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_9"
+        }
+    ],
+    "params": {
+        "additional": {
+            "trees_in_step": 1,
+            "train_cant_improve_limit": 0,
+            "max_steps": 1,
+            "max_rows_limit": null,
+            "max_cols_limit": null
+        },
+        "preprocessing": {
+            "columns_preprocessing": {
+                "is_day_lag7": [
+                    "remove_column"
+                ],
+                "is_day_rollmean7": [
+                    "remove_column"
+                ],
+                "terrestrial_radiation_rollmean7": [
+                    "remove_column"
+                ],
+                "terrestrial_radiation_instant_lag7": [
+                    "remove_column"
+                ],
+                "terrestrial_radiation_instant_rollmean7": [
+                    "remove_column"
+                ]
+            },
+            "target_preprocessing": [
+                "na_exclude",
+                "categorical_to_int"
+            ],
+            "ml_task": "multiclass_classification"
+        },
+        "validation_strategy": {
+            "validation_type": "kfold",
+            "shuffle": true,
+            "stratify": true,
+            "X_path": "AutoML_1/X.data",
+            "y_path": "AutoML_1/y.data",
+            "results_path": "AutoML_1",
+            "k_folds": 10
+        },
+        "learner": {
+            "model_type": "Decision Tree",
+            "ml_task": "multiclass_classification",
+            "n_jobs": -1,
+            "seed": 1236,
+            "criterion": "gini",
+            "max_depth": 4,
+            "num_class": 6,
+            "explain_level": 0
+        },
+        "automl_random_state": 1234,
+        "ml_task": "multiclass_classification",
+        "explain_level": 0,
+        "name": "2_DecisionTree",
+        "status": "initialized",
+        "final_loss": null,
+        "train_time": null,
+        "data_type": "original",
+        "max_time_for_learner": 60
+    },
+    "saved": [
+        "2_DecisionTree/learner_fold_0.decision_tree",
+        "2_DecisionTree/learner_fold_1.decision_tree",
+        "2_DecisionTree/learner_fold_2.decision_tree",
+        "2_DecisionTree/learner_fold_3.decision_tree",
+        "2_DecisionTree/learner_fold_4.decision_tree",
+        "2_DecisionTree/learner_fold_5.decision_tree",
+        "2_DecisionTree/learner_fold_6.decision_tree",
+        "2_DecisionTree/learner_fold_7.decision_tree",
+        "2_DecisionTree/learner_fold_8.decision_tree",
+        "2_DecisionTree/learner_fold_9.decision_tree"
+    ],
+    "predictions_fname": "2_DecisionTree/predictions_out_of_folds.csv",
+    "metric_name": "accuracy",
+    "final_loss": "-0.8043478260869565",
+    "train_time": 2.9666709899902344,
+    "is_stacked": false,
+    "joblib_version": "1.4.2"
+}

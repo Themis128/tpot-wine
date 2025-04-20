@@ -1,8 +1,9 @@
+from log_utils import setup_logger
 #!/usr/bin/env python3
 import os
 import pandas as pd
 from datetime import datetime
-from scripts.utils.utils import generate_pdf_from_dict  # used only if fallback needed
+from utils import generate_pdf_from_dict  # used only if fallback needed
 
 # === Paths ===
 LOG_DIR = "logs"
@@ -13,7 +14,19 @@ LEADERBOARD_FILES = {
 OUTPUT_PATH = os.path.join(LOG_DIR, "validation_report.pdf")
 TMP_HTML = "tmp_validation.html"
 
+logger = setup_logger()
+
 def collect_summary(df, task):
+    """
+    Collects summary statistics and performance data from the leaderboard DataFrame.
+
+    Args:
+        df (pd.DataFrame): The leaderboard DataFrame.
+        task (str): The task type (e.g., "Regression" or "Classification").
+
+    Returns:
+        tuple: A dictionary of summary statistics and a list of performance records.
+    """
     summary = {
         "Generated On": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "Task Type": task,
@@ -36,6 +49,9 @@ def collect_summary(df, task):
     return summary, df[display_columns].fillna("").to_dict(orient="records")
 
 def main():
+    """
+    Main function to generate a validation report from leaderboard files.
+    """
     full_html = "<html><head><meta charset='utf-8'></head><body><h1>Wine Quality Validation Report</h1>"
 
     for task_name, path in LEADERBOARD_FILES.items():

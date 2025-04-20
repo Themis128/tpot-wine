@@ -1,0 +1,3942 @@
+{
+    "uid": "6181d4b7-3c4c-42e2-bea1-1af1c6bc2f43",
+    "name": "4_Linear",
+    "preprocessing": [
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.25979117796786866,
+                        0.2849673835198199,
+                        0.20879508050614276,
+                        0.26682358969107717,
+                        0.20660577182307271,
+                        0.23901383945510987,
+                        0.27159639840047944,
+                        0.24985915165377437,
+                        0.2810557873005812,
+                        0.18666187124165443,
+                        0.2813668569033275,
+                        0.2464899748587488,
+                        0.18615904592602459,
+                        0.18070991037197612,
+                        0.18682589446598868,
+                        0.18370193438977195,
+                        0.18505424375804053,
+                        0.17955240914162834,
+                        0.18585071278577117,
+                        0.18273073743416862,
+                        0.3539957311037259,
+                        0.3749451481318807,
+                        0.31442596352942076,
+                        0.29634360780620583,
+                        0.1537293410115509,
+                        0.20809707944529054,
+                        0.15867877117534096,
+                        0.169595217695918,
+                        0.2053958423004984,
+                        0.21790439243902215,
+                        0.22718066010429377,
+                        0.21555703986377703,
+                        0.24315243552093932,
+                        0.24468599288764434,
+                        0.24249365655494476,
+                        0.24315482717830936,
+                        0.3598121548344167,
+                        0.3598121548344167,
+                        0.3598121548344167,
+                        0.3598121548344167,
+                        0.21563422566308146,
+                        0.1885917569753855,
+                        0.24806483512980404
+                    ],
+                    "mean": [
+                        0.642749992047785,
+                        0.6452214193651984,
+                        0.6223428680924573,
+                        0.6135236605212879,
+                        0.5594391307111862,
+                        0.6869086062584103,
+                        0.6127722361646165,
+                        0.6768423227848073,
+                        0.6366550267253231,
+                        0.5071304173043802,
+                        0.6074481039825343,
+                        0.5715391733970108,
+                        0.6269059380787227,
+                        0.6334539648897476,
+                        0.6296215504299214,
+                        0.6343601848579606,
+                        0.629758126803182,
+                        0.6388214875358097,
+                        0.6325208244812976,
+                        0.6379082586102547,
+                        0.6232726945783287,
+                        0.5273437482619664,
+                        0.6620571723093751,
+                        0.6008378859496354,
+                        0.7065350847564884,
+                        0.6801134837358391,
+                        0.6952087144051043,
+                        0.6899966071288045,
+                        0.6684725042285983,
+                        0.7216469293954184,
+                        0.6530284012452053,
+                        0.662941405738912,
+                        0.5588764213298881,
+                        0.5630812517116053,
+                        0.5586247314032754,
+                        0.5602960722334828,
+                        0.5631439007427113,
+                        0.5631439007427113,
+                        0.5631439007427113,
+                        0.5631439007427113,
+                        0.6054887197031538,
+                        0.5348517875690527,
+                        0.5451285614985205
+                    ],
+                    "var": [
+                        0.06749145614993281,
+                        0.08120640967013211,
+                        0.04359538564356663,
+                        0.07119482801563232,
+                        0.04268594495060758,
+                        0.05712761545107304,
+                        0.07376460362411194,
+                        0.06242959566514381,
+                        0.07899235557514951,
+                        0.03484265417543598,
+                        0.0791673081636576,
+                        0.06075730770586662,
+                        0.034655190380087735,
+                        0.032656071706647645,
+                        0.03490391484301674,
+                        0.03374640069854408,
+                        0.034245073132860286,
+                        0.032239067628562705,
+                        0.034540487442979204,
+                        0.03339052240323507,
+                        0.1253129776396614,
+                        0.14058386410763796,
+                        0.09886368654140462,
+                        0.08781953388759835,
+                        0.0236327102878457,
+                        0.043304394473659566,
+                        0.025178952421716215,
+                        0.02876253786532582,
+                        0.042187452034331205,
+                        0.04748232424421937,
+                        0.05161105232542265,
+                        0.04646483743483396,
+                        0.059123106899764556,
+                        0.05987123511541234,
+                        0.0588031734693875,
+                        0.05912426998011349,
+                        0.12946478676658624,
+                        0.12946478676658624,
+                        0.12946478676658624,
+                        0.12946478676658624,
+                        0.046498119277316736,
+                        0.03556685079906286,
+                        0.06153616242797686
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.25887559236588364,
+                        0.2829413462830928,
+                        0.2102359665904798,
+                        0.26692594107002715,
+                        0.21184082675659593,
+                        0.23629767398399432,
+                        0.27244517597651735,
+                        0.2482255583358184,
+                        0.2813858639879829,
+                        0.1822950844639645,
+                        0.28405707696222326,
+                        0.24807837612298766,
+                        0.18733882666452678,
+                        0.18177143756026853,
+                        0.18807311624739376,
+                        0.18503553930291677,
+                        0.18597258838859584,
+                        0.18034762759993855,
+                        0.18683910670230666,
+                        0.18381510625622663,
+                        0.3569338631994343,
+                        0.3794166245449428,
+                        0.3162573726631989,
+                        0.2946697613004989,
+                        0.15478757284148373,
+                        0.21756261225615534,
+                        0.15940426230411492,
+                        0.17300888581402127,
+                        0.20620518028344353,
+                        0.22783194235801457,
+                        0.22810621176548504,
+                        0.22067677411773906,
+                        0.24216427684536315,
+                        0.24346182700825614,
+                        0.24147757071688303,
+                        0.2421024508018073,
+                        0.35198438092433304,
+                        0.35198438092433304,
+                        0.35198438092433304,
+                        0.35198438092433304,
+                        0.22241702496518548,
+                        0.19513068681244622,
+                        0.2523219201863063
+                    ],
+                    "mean": [
+                        0.641062379678093,
+                        0.6468117999957655,
+                        0.618555565085433,
+                        0.6144081626451985,
+                        0.5486319448548985,
+                        0.6829545683732541,
+                        0.6067717435127495,
+                        0.6728468674729505,
+                        0.632014433451606,
+                        0.5052277466230303,
+                        0.6025905167616982,
+                        0.5680357262670115,
+                        0.6204414818094511,
+                        0.6280185850450326,
+                        0.6232101986525446,
+                        0.628253739337534,
+                        0.6232584250611256,
+                        0.6333631286337161,
+                        0.6260638076611638,
+                        0.6317670452238178,
+                        0.6194972350051858,
+                        0.5311296665503918,
+                        0.6696736632551297,
+                        0.6079430035869849,
+                        0.7035427088267867,
+                        0.6674929748211637,
+                        0.6918849322734447,
+                        0.6850464364852606,
+                        0.66145325172077,
+                        0.7063282218270778,
+                        0.644621174034233,
+                        0.6522492729987655,
+                        0.5506337264819047,
+                        0.5546839682498914,
+                        0.5503809259123313,
+                        0.5519468767172881,
+                        0.5683215109452057,
+                        0.5683215109452057,
+                        0.5683215109452057,
+                        0.5683215109452057,
+                        0.603462334256813,
+                        0.5331492871186243,
+                        0.546840929812055
+                    ],
+                    "var": [
+                        0.06701657232278717,
+                        0.08005580543648903,
+                        0.044199161648233336,
+                        0.07124945801611961,
+                        0.04487653588091809,
+                        0.05583659073024606,
+                        0.07422637391287551,
+                        0.0616159278111288,
+                        0.0791780044522636,
+                        0.03323149781972395,
+                        0.08068842297232244,
+                        0.06154288069981854,
+                        0.035095835976041614,
+                        0.0330408555127266,
+                        0.03537149705500569,
+                        0.034238150805121256,
+                        0.03458580363195409,
+                        0.03252526678092612,
+                        0.03490885179331594,
+                        0.033787993287987886,
+                        0.1274017826984725,
+                        0.14395697498107807,
+                        0.10001872576382949,
+                        0.08683026822489298,
+                        0.02395919270615763,
+                        0.0473334902517222,
+                        0.025409718840719072,
+                        0.029932074570609046,
+                        0.042520576375727454,
+                        0.051907393958625675,
+                        0.0520324438460003,
+                        0.04869823863501163,
+                        0.058643536980037686,
+                        0.05927366121019803,
+                        0.05831141715932725,
+                        0.05861359668424153,
+                        0.123893004414686,
+                        0.123893004414686,
+                        0.123893004414686,
+                        0.123893004414686,
+                        0.049469332994363936,
+                        0.03807598493589697,
+                        0.06366635140650473
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.26460557990744965,
+                        0.2788180675745365,
+                        0.21117407113569847,
+                        0.26639901977200753,
+                        0.20483198403162095,
+                        0.24638282114758073,
+                        0.27599399283458836,
+                        0.25780726685815825,
+                        0.2887130930604083,
+                        0.18620369685032148,
+                        0.28033870906843206,
+                        0.24680974988432036,
+                        0.18853598821700712,
+                        0.1842931777258808,
+                        0.18938646844797571,
+                        0.18664471189979417,
+                        0.1872364579905339,
+                        0.18298891063305528,
+                        0.1882213441068961,
+                        0.18550764462727834,
+                        0.35688516000538445,
+                        0.37815607879443625,
+                        0.31792077019172865,
+                        0.2992630429418054,
+                        0.15256848980161541,
+                        0.20906091907399643,
+                        0.1585930734043772,
+                        0.16904149272491842,
+                        0.20539361475270967,
+                        0.22037731749401115,
+                        0.22922965605812942,
+                        0.21457415948212946,
+                        0.24280543925968973,
+                        0.24400701701936417,
+                        0.24197690008887357,
+                        0.24252572160557567,
+                        0.35514086027378994,
+                        0.35514086027378994,
+                        0.35514086027378994,
+                        0.35514086027378994,
+                        0.21696026627377984,
+                        0.19168736577964235,
+                        0.24906807411636328
+                    ],
+                    "mean": [
+                        0.6328796679557862,
+                        0.6446211864794819,
+                        0.6181167561848295,
+                        0.6062800745351626,
+                        0.5424802066557048,
+                        0.679055260820933,
+                        0.5966301091980448,
+                        0.6684504093888947,
+                        0.6246560255161481,
+                        0.5057466880907251,
+                        0.599274689501486,
+                        0.5670516066838841,
+                        0.6201529619614716,
+                        0.6278139692826273,
+                        0.6229220352118167,
+                        0.6279575324100511,
+                        0.6231224954887862,
+                        0.633323975719363,
+                        0.6259289776830304,
+                        0.6316190333998724,
+                        0.6145618932112454,
+                        0.5326920348873962,
+                        0.6611660129332596,
+                        0.6020376566572926,
+                        0.6988387832867508,
+                        0.6702298829587534,
+                        0.6916111210871735,
+                        0.6862628249694185,
+                        0.6561328023266753,
+                        0.7112365737027829,
+                        0.644518077904549,
+                        0.655706659401385,
+                        0.5504196322714908,
+                        0.5537089392145198,
+                        0.5500276979581178,
+                        0.5513878412521356,
+                        0.5675823355238963,
+                        0.5675823355238963,
+                        0.5675823355238963,
+                        0.5675823355238963,
+                        0.6062819296221115,
+                        0.5374606638887484,
+                        0.5460856676248484
+                    ],
+                    "var": [
+                        0.07001611291815772,
+                        0.07773951480599879,
+                        0.04459448832002504,
+                        0.07096843773548647,
+                        0.04195614168233022,
+                        0.06070449455664076,
+                        0.07617268408077882,
+                        0.06646458684487361,
+                        0.083355250104508,
+                        0.034671816720726424,
+                        0.07858979180215499,
+                        0.06091505263796078,
+                        0.03554581885296345,
+                        0.03396397535630309,
+                        0.035867234431196104,
+                        0.03483624848015717,
+                        0.035057491200840965,
+                        0.03348494141467229,
+                        0.03542727437740659,
+                        0.034413086215160586,
+                        0.12736701743206888,
+                        0.14300201992918388,
+                        0.10107361611930193,
+                        0.08955836887078887,
+                        0.02327714408034563,
+                        0.043706467884064085,
+                        0.02515176293184617,
+                        0.028575026262668644,
+                        0.04218653698118452,
+                        0.04856616206585619,
+                        0.052546235216528306,
+                        0.046042069917462326,
+                        0.058954481334090876,
+                        0.05953942435468827,
+                        0.058552820176620696,
+                        0.0588187256403052,
+                        0.1261250306360076,
+                        0.1261250306360076,
+                        0.1261250306360076,
+                        0.1261250306360076,
+                        0.047071757141589454,
+                        0.0367440461995384,
+                        0.06203490554403423
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.2655782787541688,
+                        0.2812800989180932,
+                        0.211490844385072,
+                        0.2675951803551064,
+                        0.2071769418777655,
+                        0.2450536379276841,
+                        0.27991834172547,
+                        0.25688013517071745,
+                        0.2900087877514912,
+                        0.18354308938445613,
+                        0.28255810807146275,
+                        0.24794534333024137,
+                        0.18825739930582083,
+                        0.1826829766976954,
+                        0.18894611312353865,
+                        0.1857153151551837,
+                        0.1869766512025737,
+                        0.18129081627475893,
+                        0.18779140101530634,
+                        0.1845528641402319,
+                        0.356953881405521,
+                        0.3730964388258793,
+                        0.31535801664413526,
+                        0.2949802528295427,
+                        0.150560846161975,
+                        0.21663598512234492,
+                        0.15522866025463555,
+                        0.16882309139727147,
+                        0.20654519155459042,
+                        0.22704511714879563,
+                        0.22889077748993092,
+                        0.21934300087632963,
+                        0.24267403256718342,
+                        0.24340799449381642,
+                        0.24187188224810868,
+                        0.24221761665549316,
+                        0.36077407234168746,
+                        0.36077407234168746,
+                        0.36077407234168746,
+                        0.36077407234168746,
+                        0.21747246709385382,
+                        0.19113965898268756,
+                        0.2441164350636948
+                    ],
+                    "mean": [
+                        0.6417105585077435,
+                        0.6444400373521447,
+                        0.6182416545014701,
+                        0.6135009137188293,
+                        0.5447813099189673,
+                        0.6883816231186896,
+                        0.6052472689774526,
+                        0.6775584859340578,
+                        0.6345263227048139,
+                        0.5056438109010777,
+                        0.5991185408694623,
+                        0.5669344260299386,
+                        0.6219886001477206,
+                        0.6304359202089839,
+                        0.624751413837237,
+                        0.6300053374046708,
+                        0.6247769802865755,
+                        0.6358182408828693,
+                        0.6275772666061374,
+                        0.6335145378395479,
+                        0.622070473811824,
+                        0.5273082787329388,
+                        0.6676375754441038,
+                        0.5993744712198131,
+                        0.7015715990943975,
+                        0.6686526943471405,
+                        0.6898811782138815,
+                        0.6829453470430625,
+                        0.6602354682782162,
+                        0.7103680976668104,
+                        0.6443051635128602,
+                        0.6528701404303386,
+                        0.5516715969884404,
+                        0.5553201045313122,
+                        0.5513130617699268,
+                        0.5528297415226571,
+                        0.5738449338549786,
+                        0.5738449338549786,
+                        0.5738449338549786,
+                        0.5738449338549786,
+                        0.602374386987998,
+                        0.5324986630763071,
+                        0.5452784694683539
+                    ],
+                    "var": [
+                        0.07053182214602698,
+                        0.0791184940473723,
+                        0.04472837725871075,
+                        0.0716071805492819,
+                        0.042922285245823026,
+                        0.06005128546159248,
+                        0.07835427803433698,
+                        0.06598740384532607,
+                        0.08410509697308947,
+                        0.03368806566079045,
+                        0.07983908443692443,
+                        0.061476893279151276,
+                        0.03544084839339127,
+                        0.03337306997513072,
+                        0.03570063366449306,
+                        0.034490178283189205,
+                        0.0349602680949289,
+                        0.0328663600655684,
+                        0.0352656102952916,
+                        0.034059759662362896,
+                        0.12741607345046674,
+                        0.1392009526645531,
+                        0.0994506786617227,
+                        0.08701334955938095,
+                        0.022668568397009897,
+                        0.046931150049928844,
+                        0.024095936964449068,
+                        0.028501236188931477,
+                        0.042660916154322444,
+                        0.05154948522111033,
+                        0.05239098801994507,
+                        0.048111352033433544,
+                        0.058890686082418396,
+                        0.05924745178350177,
+                        0.05850200742224296,
+                        0.05866937381826743,
+                        0.13015793127400513,
+                        0.13015793127400513,
+                        0.13015793127400513,
+                        0.13015793127400513,
+                        0.047294273943887334,
+                        0.0365343692360181,
+                        0.05959283386820712
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.26061891308775115,
+                        0.281332666663621,
+                        0.20271221811713827,
+                        0.2717513438887496,
+                        0.20689740088792138,
+                        0.24240635254789156,
+                        0.27146398272919053,
+                        0.25292122712853754,
+                        0.28326523861522873,
+                        0.18736722315030638,
+                        0.2798202752544897,
+                        0.2472524276095865,
+                        0.18200856404289098,
+                        0.17836786997771456,
+                        0.18269251495461358,
+                        0.18009615982363475,
+                        0.18093416097146692,
+                        0.17721091944796666,
+                        0.18174503785889295,
+                        0.1791428927474107,
+                        0.362683257355698,
+                        0.3765189901273722,
+                        0.32324660871973254,
+                        0.306075407306366,
+                        0.15343071459682825,
+                        0.21650017187951942,
+                        0.15826281765640268,
+                        0.16940128984044384,
+                        0.2040977528514085,
+                        0.2263553368238549,
+                        0.22914900439235933,
+                        0.21817319567113516,
+                        0.24167000464059413,
+                        0.24323102617668885,
+                        0.24103918491130397,
+                        0.24171820082887735,
+                        0.356794388936665,
+                        0.356794388936665,
+                        0.356794388936665,
+                        0.356794388936665,
+                        0.2144186902131226,
+                        0.18717672357183598,
+                        0.2506659126618309
+                    ],
+                    "mean": [
+                        0.6422606788449701,
+                        0.6419350628776046,
+                        0.6291202369685337,
+                        0.606231401595681,
+                        0.5546288093679128,
+                        0.6864039317855835,
+                        0.6081326798549229,
+                        0.6764266858543672,
+                        0.6349195958394741,
+                        0.5038950574742906,
+                        0.6026880227650697,
+                        0.5680811531611466,
+                        0.6305044743105344,
+                        0.6370176267223511,
+                        0.6332296207855159,
+                        0.63792728747076,
+                        0.6333343573280469,
+                        0.642412471797607,
+                        0.636106754276695,
+                        0.6414749140785869,
+                        0.6060286393723765,
+                        0.5214391451630174,
+                        0.6501258125502166,
+                        0.5922967413486573,
+                        0.7078231848507955,
+                        0.6740942560210882,
+                        0.6963787071844515,
+                        0.6898952209891382,
+                        0.6725311483499529,
+                        0.7156155806671234,
+                        0.6556079044370702,
+                        0.6657928780470308,
+                        0.5571746484310174,
+                        0.5611812643245386,
+                        0.5568004706799446,
+                        0.5584324421707273,
+                        0.5716900183478294,
+                        0.5716900183478294,
+                        0.5716900183478294,
+                        0.5716900183478294,
+                        0.6024762102689301,
+                        0.5322535050856743,
+                        0.5454106459678638
+                    ],
+                    "var": [
+                        0.06792221785904079,
+                        0.07914806933206407,
+                        0.041092243373970244,
+                        0.07384879290534145,
+                        0.042806534494177255,
+                        0.0587608397555727,
+                        0.07369269391919427,
+                        0.06396914713220528,
+                        0.08023919540774248,
+                        0.035106476311056706,
+                        0.07829938644349838,
+                        0.06113376295883381,
+                        0.03312711738495515,
+                        0.03181509704038689,
+                        0.033376555020441706,
+                        0.03243462678322019,
+                        0.0327371706064487,
+                        0.03140370997159373,
+                        0.03303125878633043,
+                        0.032092176021910286,
+                        0.13153914516613946,
+                        0.1417665499265362,
+                        0.10448837004880787,
+                        0.09368215495775785,
+                        0.023540984181693363,
+                        0.04687232442386145,
+                        0.025047119452543766,
+                        0.028696796999606065,
+                        0.04165589271899463,
+                        0.0512367385086408,
+                        0.05250926621400951,
+                        0.04759954330935543,
+                        0.058404391142984784,
+                        0.059161332094965095,
+                        0.05809988866270579,
+                        0.05842768861194948,
+                        0.12730223597668816,
+                        0.12730223597668816,
+                        0.12730223597668816,
+                        0.12730223597668816,
+                        0.04597537471271104,
+                        0.0350351258470875,
+                        0.06283339977058863
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.2647199056865129,
+                        0.2821591978371207,
+                        0.19617590538792767,
+                        0.27331573163843087,
+                        0.20740226617726776,
+                        0.24174262851220513,
+                        0.2733947787765277,
+                        0.2525915626254906,
+                        0.28460551237015397,
+                        0.1818122347005569,
+                        0.27969441176884347,
+                        0.24394876054580047,
+                        0.1762227091234412,
+                        0.17216520305172467,
+                        0.17696943878343757,
+                        0.17407769688024874,
+                        0.17476509298720516,
+                        0.17062003032059964,
+                        0.17563080175944054,
+                        0.17273398940950851,
+                        0.35504434842747434,
+                        0.37101190715477056,
+                        0.3179854296137399,
+                        0.2968963974544637,
+                        0.1366157381208405,
+                        0.19501426184451864,
+                        0.14205623215788518,
+                        0.15691139794518455,
+                        0.1968238040324721,
+                        0.20912408904581928,
+                        0.21968855947669125,
+                        0.2079262713265836,
+                        0.24152435040617568,
+                        0.24306254939553135,
+                        0.24082676255512955,
+                        0.2414776289765095,
+                        0.35080822751343604,
+                        0.35080822751343604,
+                        0.35080822751343604,
+                        0.35080822751343604,
+                        0.21597997367558308,
+                        0.18872618583737427,
+                        0.2406583894811581
+                    ],
+                    "mean": [
+                        0.6498248496495557,
+                        0.648545407118637,
+                        0.6206923390484999,
+                        0.6061212729502671,
+                        0.5466023827376707,
+                        0.6920147658128171,
+                        0.6121291726765146,
+                        0.6814514314543151,
+                        0.6391714594225419,
+                        0.5056990122002067,
+                        0.603585851305456,
+                        0.5682446231736187,
+                        0.623716056860695,
+                        0.6313903874530292,
+                        0.6262080695013938,
+                        0.6310232995426338,
+                        0.62643789542182,
+                        0.6366924434477471,
+                        0.6289662328109499,
+                        0.6344630552247748,
+                        0.6127060986037954,
+                        0.5237552819400703,
+                        0.6567708127061713,
+                        0.5858346126750663,
+                        0.708724412899801,
+                        0.6848988201611973,
+                        0.6972652546631204,
+                        0.6905112517606696,
+                        0.6693120550295804,
+                        0.7267862428334698,
+                        0.653810010260718,
+                        0.663825895753862,
+                        0.5374506604506327,
+                        0.540931953888529,
+                        0.5371941447733445,
+                        0.5386212569122607,
+                        0.5832904750045169,
+                        0.5832904750045169,
+                        0.5832904750045169,
+                        0.5832904750045169,
+                        0.6020182922555078,
+                        0.5305481310685185,
+                        0.5400861058168279
+                    ],
+                    "var": [
+                        0.07007662846667627,
+                        0.07961381292408741,
+                        0.038484985854773154,
+                        0.07470148916105075,
+                        0.04301570001546623,
+                        0.05843949843999001,
+                        0.0747447050622665,
+                        0.06380249750958714,
+                        0.08100029767147786,
+                        0.03305568868681039,
+                        0.07822896397471936,
+                        0.059510997771832295,
+                        0.031054443210804965,
+                        0.029640857141841583,
+                        0.03131818226332486,
+                        0.03030304455113176,
+                        0.030542837726826467,
+                        0.02911119474660234,
+                        0.030846178526663905,
+                        0.029837031097324197,
+                        0.1260564893502898,
+                        0.1376498352506201,
+                        0.10111473344663471,
+                        0.08814747082143891,
+                        0.018663859902302068,
+                        0.03803056232276248,
+                        0.02017997309489497,
+                        0.024621186805112064,
+                        0.038739609833812985,
+                        0.043732884619243746,
+                        0.04826306316494371,
+                        0.04323333430777605,
+                        0.058334011839125136,
+                        0.05907940291865512,
+                        0.057997529562784755,
+                        0.05831144529611679,
+                        0.1230664124911187,
+                        0.1230664124911187,
+                        0.1230664124911187,
+                        0.1230664124911187,
+                        0.04664734902890556,
+                        0.03561757322072313,
+                        0.057916460427664795
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.26725678644078965,
+                        0.27721624535644346,
+                        0.20507364025763652,
+                        0.26828543179426767,
+                        0.20207889710445756,
+                        0.2420561161960473,
+                        0.2733436919380619,
+                        0.2528540841118027,
+                        0.2837588965011068,
+                        0.17626426373512102,
+                        0.27159999506640786,
+                        0.23586763614181766,
+                        0.178933802801847,
+                        0.17164901750479272,
+                        0.17945402803820887,
+                        0.17571168935588727,
+                        0.17765016208944356,
+                        0.17023063072555553,
+                        0.17829038877498213,
+                        0.17452175642081633,
+                        0.35331644740561574,
+                        0.3690989617604322,
+                        0.3168011899512508,
+                        0.29406469675825747,
+                        0.1523477417245433,
+                        0.21388410787171505,
+                        0.15631281615660306,
+                        0.16876943806171685,
+                        0.20403795471419706,
+                        0.22515841274647638,
+                        0.22331010863776332,
+                        0.21582963757961057,
+                        0.23272047478280317,
+                        0.23411165618512622,
+                        0.2321300256765788,
+                        0.23257913282155462,
+                        0.35586328845524734,
+                        0.35586328845524734,
+                        0.35586328845524734,
+                        0.35586328845524734,
+                        0.20899758210996774,
+                        0.18240452360817697,
+                        0.23335027733192593
+                    ],
+                    "mean": [
+                        0.6444416068414359,
+                        0.6575302951559794,
+                        0.6141347834345056,
+                        0.6087493612718707,
+                        0.5411263214220251,
+                        0.6859622035820505,
+                        0.6058938433928726,
+                        0.6751320835480381,
+                        0.6336431741916234,
+                        0.5103578201287565,
+                        0.6089862958636915,
+                        0.5745920444803234,
+                        0.6190310524494279,
+                        0.627871693246581,
+                        0.6217871756623342,
+                        0.6273508586544836,
+                        0.62195000422352,
+                        0.6333832671540103,
+                        0.624746879210103,
+                        0.6309800603550368,
+                        0.6242627202127479,
+                        0.5282014408910172,
+                        0.6653450283880397,
+                        0.599410679889219,
+                        0.6959341773321736,
+                        0.6646781333740566,
+                        0.6843702639300697,
+                        0.6768642793703685,
+                        0.6573331929191458,
+                        0.7065420438981657,
+                        0.6417474572564329,
+                        0.6503045728151597,
+                        0.5535457425720157,
+                        0.5570110694442105,
+                        0.5531697198572528,
+                        0.5545847257659635,
+                        0.573000392879557,
+                        0.573000392879557,
+                        0.573000392879557,
+                        0.573000392879557,
+                        0.6113241501461608,
+                        0.5401937275812289,
+                        0.5555663521682251
+                    ],
+                    "var": [
+                        0.07142618989865784,
+                        0.07684884668952385,
+                        0.04205519792851852,
+                        0.07197707291303665,
+                        0.04083588065495395,
+                        0.058591163387914355,
+                        0.07471677392233009,
+                        0.06393518785201861,
+                        0.08051911134352585,
+                        0.0310690906700843,
+                        0.07376655732007277,
+                        0.05563354177912889,
+                        0.032017305785130276,
+                        0.02946338521036064,
+                        0.03220374817913825,
+                        0.03087459777629983,
+                        0.03155958009040557,
+                        0.02897846763722045,
+                        0.03178746272953427,
+                        0.030457843464206744,
+                        0.12483251200732522,
+                        0.13623404357262903,
+                        0.1003629939545285,
+                        0.08647404587952591,
+                        0.02320983440856815,
+                        0.04574641160007944,
+                        0.024433696494807984,
+                        0.02848312322366768,
+                        0.041631486963952725,
+                        0.05069631083051262,
+                        0.04986740461980966,
+                        0.04658243245774605,
+                        0.05415881938313332,
+                        0.05480826756174274,
+                        0.05388434882060914,
+                        0.05409305302402635,
+                        0.12663868007018259,
+                        0.12663868007018259,
+                        0.12663868007018259,
+                        0.12663868007018259,
+                        0.04367998932781271,
+                        0.03327141023272599,
+                        0.054452351930886746
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.2620185285788813,
+                        0.2811483497027451,
+                        0.2025859635468315,
+                        0.2764812287701229,
+                        0.2131160273219674,
+                        0.24287206289483992,
+                        0.27249082332466906,
+                        0.25293679379090583,
+                        0.2828887179381187,
+                        0.18436940570320373,
+                        0.2775302340214764,
+                        0.2431466802567786,
+                        0.1800516359300914,
+                        0.17520325565857148,
+                        0.18074260008819062,
+                        0.17784496124541171,
+                        0.1787909623979743,
+                        0.17395469487632942,
+                        0.17960418945505457,
+                        0.17672972537985726,
+                        0.355313997703139,
+                        0.3752773033982234,
+                        0.3175612260220366,
+                        0.3003501384441852,
+                        0.15191726519301565,
+                        0.21519633678225053,
+                        0.15622064666604152,
+                        0.16753536246076636,
+                        0.2056046794811871,
+                        0.22601840302443457,
+                        0.22757437495776436,
+                        0.21844012791603606,
+                        0.24253251787420033,
+                        0.24432643620655448,
+                        0.2418776148473152,
+                        0.242573668464787,
+                        0.3555339406328702,
+                        0.3555339406328702,
+                        0.3555339406328702,
+                        0.3555339406328702,
+                        0.21404677286309476,
+                        0.18804772420993762,
+                        0.24822144123955767
+                    ],
+                    "mean": [
+                        0.6466200292967946,
+                        0.6532778301792013,
+                        0.6253181437527464,
+                        0.5948456764068206,
+                        0.5477725101928664,
+                        0.6873535138265932,
+                        0.6174781693836503,
+                        0.6774068635479428,
+                        0.6384118057540392,
+                        0.5071141338135362,
+                        0.6163966636721905,
+                        0.575744450255574,
+                        0.6263842313258033,
+                        0.6323530299075405,
+                        0.6289650179117408,
+                        0.6333982743194406,
+                        0.6292470678586992,
+                        0.6377930649813478,
+                        0.6318795393434691,
+                        0.6369933128435081,
+                        0.6012077780344783,
+                        0.5280436215436976,
+                        0.6465356520247192,
+                        0.5906881328021406,
+                        0.7020529169378862,
+                        0.6665037553321893,
+                        0.6908582775921522,
+                        0.6851919854308781,
+                        0.6589490809404718,
+                        0.7062232988594147,
+                        0.643152095398803,
+                        0.652244107587793,
+                        0.5484428613607757,
+                        0.552105625929847,
+                        0.5482086206265413,
+                        0.5497331376087919,
+                        0.5733327782460451,
+                        0.5733327782460451,
+                        0.5733327782460451,
+                        0.5733327782460451,
+                        0.612492505138776,
+                        0.5386448764121391,
+                        0.5524948944867766
+                    ],
+                    "var": [
+                        0.06865370931864205,
+                        0.07904439454057705,
+                        0.04104107262619814,
+                        0.07644186986223703,
+                        0.045418441101497564,
+                        0.05898683893479508,
+                        0.074251248796156,
+                        0.0639770216532232,
+                        0.08002602673667249,
+                        0.03399207775935253,
+                        0.07702303079601547,
+                        0.059120308119892134,
+                        0.03241859160110218,
+                        0.030696180793362754,
+                        0.03266788748663961,
+                        0.031628830240381996,
+                        0.03196620823519386,
+                        0.030260235869516865,
+                        0.03225766486980714,
+                        0.031233395832839767,
+                        0.12624803696378625,
+                        0.14083305444584224,
+                        0.10084513227261901,
+                        0.09021020566344119,
+                        0.023078855463725047,
+                        0.046309463364499794,
+                        0.024404890444756185,
+                        0.028068097674860366,
+                        0.04227328422456168,
+                        0.05108431850571574,
+                        0.05179009613741713,
+                        0.0477160894839742,
+                        0.058822022226399304,
+                        0.05969540742939554,
+                        0.05850478056422616,
+                        0.05884198463246441,
+                        0.12640438294193726,
+                        0.12640438294193726,
+                        0.12640438294193726,
+                        0.12640438294193726,
+                        0.045816020973105276,
+                        0.03536194658053676,
+                        0.061613883891043185
+                    ],
+                    "n_samples_seen": 124,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.26190529110963157,
+                        0.28841606286026994,
+                        0.20019968266620053,
+                        0.2683268011375181,
+                        0.2100096871770055,
+                        0.24049547545811728,
+                        0.2639766428216841,
+                        0.2494568983492151,
+                        0.27777262923245455,
+                        0.18791615453234062,
+                        0.2815945678349971,
+                        0.24764942090827297,
+                        0.17945166606754592,
+                        0.17439397896928902,
+                        0.1800684587227703,
+                        0.17716641762769947,
+                        0.17827286951825175,
+                        0.1732329454400244,
+                        0.17901644522995078,
+                        0.17612849511044393,
+                        0.3511748077409406,
+                        0.36695733060782487,
+                        0.31031455110303563,
+                        0.2895145442544322,
+                        0.15232419102678818,
+                        0.21401883800479846,
+                        0.1568955834282476,
+                        0.16942647344839343,
+                        0.20296520017583464,
+                        0.22457575480197606,
+                        0.22457626304465875,
+                        0.21765242922728775,
+                        0.24722082079575128,
+                        0.24893736980241646,
+                        0.24660623833272394,
+                        0.24734426369737414,
+                        0.34979361299969963,
+                        0.34979361299969963,
+                        0.34979361299969963,
+                        0.34979361299969963,
+                        0.2168216581738401,
+                        0.18953258968908346,
+                        0.24488584494623172
+                    ],
+                    "mean": [
+                        0.6490742002475672,
+                        0.6475022701989412,
+                        0.6255957416676757,
+                        0.621452061333907,
+                        0.5536076285479488,
+                        0.6903766546608071,
+                        0.6169592036718201,
+                        0.6808714530248815,
+                        0.6411536116298158,
+                        0.503562208226618,
+                        0.6072562149376678,
+                        0.5698123566416862,
+                        0.6269405329386776,
+                        0.6328423989559772,
+                        0.6295407649519178,
+                        0.6338421123730743,
+                        0.6296598590127828,
+                        0.6380727404618106,
+                        0.6323054015479352,
+                        0.6372658231583376,
+                        0.6278198392380044,
+                        0.5419501281058111,
+                        0.66945571307549,
+                        0.609205097478349,
+                        0.705506756862533,
+                        0.6736075483579104,
+                        0.6945258099513908,
+                        0.6875327308049201,
+                        0.6656002542552196,
+                        0.7138251919801768,
+                        0.6527523878488656,
+                        0.6587985675293252,
+                        0.5407083299323183,
+                        0.5447290909176462,
+                        0.5405204610375884,
+                        0.5421032390342232,
+                        0.5759162609847562,
+                        0.5759162609847562,
+                        0.5759162609847562,
+                        0.5759162609847562,
+                        0.6013350563155351,
+                        0.5302585112313873,
+                        0.5483195248423349
+                    ],
+                    "var": [
+                        0.06859438151122087,
+                        0.08318382531581918,
+                        0.04007991293964739,
+                        0.07199927220869318,
+                        0.0441040687081837,
+                        0.057838073715825895,
+                        0.06968366795540698,
+                        0.06222874413401064,
+                        0.07715763355071066,
+                        0.03531248113422252,
+                        0.07929550063417878,
+                        0.06133023567620295,
+                        0.03220290045441802,
+                        0.030413259900740824,
+                        0.03242464982679403,
+                        0.031387939535032425,
+                        0.031781216006271616,
+                        0.030009653385826476,
+                        0.03204688766276797,
+                        0.031021246789869675,
+                        0.12332374559188661,
+                        0.13465768248682047,
+                        0.09629512062627851,
+                        0.08381867133485157,
+                        0.023202659171965453,
+                        0.045804063020924164,
+                        0.024616224099290207,
+                        0.02870532990515916,
+                        0.04119487248241663,
+                        0.050434269644877266,
+                        0.05043449792310376,
+                        0.0473725799485395,
+                        0.061118134234924966,
+                        0.06196981408414504,
+                        0.06081463678461624,
+                        0.06117918478399615,
+                        0.12235557169538362,
+                        0.12235557169538362,
+                        0.12235557169538362,
+                        0.12235557169538362,
+                        0.047011631453253565,
+                        0.03592260255425046,
+                        0.05996907705502985
+                    ],
+                    "n_samples_seen": 125,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        },
+        {
+            "remove_columns": [
+                "is_day_lag7",
+                "is_day_rollmean7",
+                "terrestrial_radiation_rollmean7",
+                "terrestrial_radiation_instant_lag7",
+                "terrestrial_radiation_instant_rollmean7"
+            ],
+            "scale": [
+                {
+                    "scale": [
+                        0.2586141611389555,
+                        0.28808232803778994,
+                        0.20930040562457236,
+                        0.27109357144709095,
+                        0.21005725363154457,
+                        0.2360468223643821,
+                        0.26864419926078503,
+                        0.24738697002643772,
+                        0.2803768320990383,
+                        0.18389436812324564,
+                        0.283704343249494,
+                        0.25076906497775797,
+                        0.18735855753049446,
+                        0.18251799744136588,
+                        0.18801149562410738,
+                        0.18496449086653186,
+                        0.18617924105885725,
+                        0.1812242779852936,
+                        0.18695289071668109,
+                        0.1838843413164852,
+                        0.36212325735116785,
+                        0.3772471659128854,
+                        0.3217804842138941,
+                        0.3040439425658675,
+                        0.15454056022029763,
+                        0.21241062856083773,
+                        0.1595241511567885,
+                        0.1724052404628739,
+                        0.20931342168436462,
+                        0.22077974750085916,
+                        0.23267883761922384,
+                        0.221805491734553,
+                        0.24689292491437262,
+                        0.24889450773480112,
+                        0.24626853341330665,
+                        0.247026108213117,
+                        0.3528219811912925,
+                        0.3528219811912925,
+                        0.3528219811912925,
+                        0.3528219811912925,
+                        0.21967774689522515,
+                        0.19391696255128335,
+                        0.25278061942156743
+                    ],
+                    "mean": [
+                        0.6477783229447319,
+                        0.6438517723372392,
+                        0.6256206054599764,
+                        0.6137856572245766,
+                        0.5547196861279047,
+                        0.6917769614931157,
+                        0.6164036762565454,
+                        0.6817177411688586,
+                        0.6403684481685882,
+                        0.5049335468489613,
+                        0.601285452953291,
+                        0.5665533283097934,
+                        0.6282945724032405,
+                        0.6343025442006041,
+                        0.6308541093965142,
+                        0.635146613681,
+                        0.6309677691676113,
+                        0.6394581114627196,
+                        0.6335679761355301,
+                        0.6385215864721968,
+                        0.6091036714874626,
+                        0.5417626561371618,
+                        0.6548820797836784,
+                        0.5916202689927368,
+                        0.7110008437197536,
+                        0.6807717556647639,
+                        0.6993234295960826,
+                        0.6927035131183542,
+                        0.6721715884243017,
+                        0.7263764277543575,
+                        0.6557578787569178,
+                        0.6651093096551404,
+                        0.5443697712650541,
+                        0.5487952475469006,
+                        0.5441749941117794,
+                        0.5459485936619249,
+                        0.5733682578642185,
+                        0.5733682578642185,
+                        0.5733682578642185,
+                        0.5733682578642185,
+                        0.5957244220325906,
+                        0.5266208666711993,
+                        0.5373422406718715
+                    ],
+                    "var": [
+                        0.06688128434160565,
+                        0.08299142772767282,
+                        0.04380665979461052,
+                        0.07349172447993901,
+                        0.04412404980322704,
+                        0.055718102348322154,
+                        0.07216970579646838,
+                        0.0612003129388616,
+                        0.0786111679778923,
+                        0.03381713862744778,
+                        0.0804881543786267,
+                        0.06288512394981899,
+                        0.03510322907990761,
+                        0.033312819390006444,
+                        0.035348322486813744,
+                        0.03421186288151534,
+                        0.03466270980125207,
+                        0.03284223893129097,
+                        0.034951383347323305,
+                        0.033813450981397625,
+                        0.13113325351462013,
+                        0.14231542418930407,
+                        0.10354268002092816,
+                        0.09244271901099652,
+                        0.02388278475320344,
+                        0.045118275125610174,
+                        0.025447954802293903,
+                        0.02972356693906137,
+                        0.04381210849721664,
+                        0.04874369690654312,
+                        0.05413944147583313,
+                        0.04919767616360685,
+                        0.06095611637277404,
+                        0.06194847598054897,
+                        0.06064819054954094,
+                        0.06102189813891858,
+                        0.12448335041174877,
+                        0.12448335041174877,
+                        0.12448335041174877,
+                        0.12448335041174877,
+                        0.0482583124809626,
+                        0.037603788365115826,
+                        0.06389804155515132
+                    ],
+                    "n_samples_seen": 125,
+                    "n_features_in": 43,
+                    "columns": [
+                        "relative_humidity_2m",
+                        "dew_point_2m",
+                        "surface_pressure",
+                        "cloud_cover",
+                        "wind_direction_10m",
+                        "relative_humidity_2m_lag1",
+                        "relative_humidity_2m_lag7",
+                        "relative_humidity_2m_rollmean3",
+                        "relative_humidity_2m_rollmean7",
+                        "dew_point_2m_lag1",
+                        "dew_point_2m_lag7",
+                        "dew_point_2m_rollmean7",
+                        "pressure_msl_lag1",
+                        "pressure_msl_lag7",
+                        "pressure_msl_rollmean3",
+                        "pressure_msl_rollmean7",
+                        "surface_pressure_lag1",
+                        "surface_pressure_lag7",
+                        "surface_pressure_rollmean3",
+                        "surface_pressure_rollmean7",
+                        "cloud_cover_lag1",
+                        "cloud_cover_lag7",
+                        "cloud_cover_rollmean3",
+                        "cloud_cover_rollmean7",
+                        "wind_direction_10m_lag1",
+                        "wind_direction_10m_lag7",
+                        "wind_direction_10m_rollmean3",
+                        "wind_direction_10m_rollmean7",
+                        "wind_direction_100m_lag1",
+                        "wind_direction_100m_lag7",
+                        "wind_direction_100m_rollmean3",
+                        "wind_direction_100m_rollmean7",
+                        "soil_temperature_28_to_100cm_lag1",
+                        "soil_temperature_28_to_100cm_lag7",
+                        "soil_temperature_28_to_100cm_rollmean3",
+                        "soil_temperature_28_to_100cm_rollmean7",
+                        "soil_moisture_100_to_255cm_lag1",
+                        "soil_moisture_100_to_255cm_lag7",
+                        "soil_moisture_100_to_255cm_rollmean3",
+                        "soil_moisture_100_to_255cm_rollmean7",
+                        "wet_bulb_temperature_2m_lag7",
+                        "wet_bulb_temperature_2m_rollmean7",
+                        "total_column_integrated_water_vapour_lag7"
+                    ],
+                    "scale_method": "scale_normal"
+                }
+            ],
+            "categorical_y": {
+                "1": 0,
+                "2": 1,
+                "3": 2,
+                "4": 3,
+                "5": 4,
+                "6": 5
+            },
+            "ml_task": "multiclass_classification",
+            "params": {
+                "columns_preprocessing": {
+                    "relative_humidity_2m": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "relative_humidity_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag1": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "dew_point_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag1": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_lag7": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "pressure_msl_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag1": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_lag7": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "surface_pressure_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag1": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_lag7": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "cloud_cover_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_10m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag1": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "wind_direction_100m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_temperature_28_to_100cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag1": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_lag7": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean3": [
+                        "scale_normal"
+                    ],
+                    "soil_moisture_100_to_255cm_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_lag7": [
+                        "scale_normal"
+                    ],
+                    "wet_bulb_temperature_2m_rollmean7": [
+                        "scale_normal"
+                    ],
+                    "total_column_integrated_water_vapour_lag7": [
+                        "scale_normal"
+                    ],
+                    "is_day_lag7": [
+                        "remove_column"
+                    ],
+                    "is_day_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_rollmean7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_lag7": [
+                        "remove_column"
+                    ],
+                    "terrestrial_radiation_instant_rollmean7": [
+                        "remove_column"
+                    ]
+                },
+                "target_preprocessing": [
+                    "na_exclude",
+                    "categorical_to_int"
+                ],
+                "ml_task": "multiclass_classification"
+            }
+        }
+    ],
+    "learners": [
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "a1263fb2-d109-4a87-9489-c9afba9ea740",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_0"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "69cacdf7-2db3-4576-9e3d-3b296e0083a9",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_1"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "80f4db81-63d3-4117-a359-74534918137b",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_2"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "a46c614e-e573-4cef-ac4d-779333c5b7a0",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_3"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "59a6b6b9-ec18-49e0-b681-fb08574c4d31",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_4"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "215f2232-26ee-4d3d-8f4a-8d8b8bc1f15b",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_5"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "cb68a2f9-2f8a-4edf-8cd7-b7c6a25501ea",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_6"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "9ed2a980-4142-487a-b918-6046783992f5",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_7"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "adb34ccb-b5b8-4cb4-b704-9181eea16799",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_8"
+        },
+        {
+            "library_version": "1.5.2",
+            "algorithm_name": "Logistic Regression",
+            "algorithm_short_name": "Linear",
+            "uid": "8f50bb7a-48d8-455a-9ebd-42b31125cb91",
+            "params": {
+                "model_type": "Linear",
+                "ml_task": "multiclass_classification",
+                "n_jobs": -1,
+                "seed": 1235,
+                "num_class": 6,
+                "explain_level": 0
+            },
+            "name": "learner_fold_9"
+        }
+    ],
+    "params": {
+        "additional": {
+            "max_steps": 1,
+            "max_rows_limit": null,
+            "max_cols_limit": null
+        },
+        "preprocessing": {
+            "columns_preprocessing": {
+                "relative_humidity_2m": [
+                    "scale_normal"
+                ],
+                "dew_point_2m": [
+                    "scale_normal"
+                ],
+                "surface_pressure": [
+                    "scale_normal"
+                ],
+                "cloud_cover": [
+                    "scale_normal"
+                ],
+                "wind_direction_10m": [
+                    "scale_normal"
+                ],
+                "relative_humidity_2m_lag1": [
+                    "scale_normal"
+                ],
+                "relative_humidity_2m_lag7": [
+                    "scale_normal"
+                ],
+                "relative_humidity_2m_rollmean3": [
+                    "scale_normal"
+                ],
+                "relative_humidity_2m_rollmean7": [
+                    "scale_normal"
+                ],
+                "dew_point_2m_lag1": [
+                    "scale_normal"
+                ],
+                "dew_point_2m_lag7": [
+                    "scale_normal"
+                ],
+                "dew_point_2m_rollmean7": [
+                    "scale_normal"
+                ],
+                "pressure_msl_lag1": [
+                    "scale_normal"
+                ],
+                "pressure_msl_lag7": [
+                    "scale_normal"
+                ],
+                "pressure_msl_rollmean3": [
+                    "scale_normal"
+                ],
+                "pressure_msl_rollmean7": [
+                    "scale_normal"
+                ],
+                "surface_pressure_lag1": [
+                    "scale_normal"
+                ],
+                "surface_pressure_lag7": [
+                    "scale_normal"
+                ],
+                "surface_pressure_rollmean3": [
+                    "scale_normal"
+                ],
+                "surface_pressure_rollmean7": [
+                    "scale_normal"
+                ],
+                "cloud_cover_lag1": [
+                    "scale_normal"
+                ],
+                "cloud_cover_lag7": [
+                    "scale_normal"
+                ],
+                "cloud_cover_rollmean3": [
+                    "scale_normal"
+                ],
+                "cloud_cover_rollmean7": [
+                    "scale_normal"
+                ],
+                "wind_direction_10m_lag1": [
+                    "scale_normal"
+                ],
+                "wind_direction_10m_lag7": [
+                    "scale_normal"
+                ],
+                "wind_direction_10m_rollmean3": [
+                    "scale_normal"
+                ],
+                "wind_direction_10m_rollmean7": [
+                    "scale_normal"
+                ],
+                "wind_direction_100m_lag1": [
+                    "scale_normal"
+                ],
+                "wind_direction_100m_lag7": [
+                    "scale_normal"
+                ],
+                "wind_direction_100m_rollmean3": [
+                    "scale_normal"
+                ],
+                "wind_direction_100m_rollmean7": [
+                    "scale_normal"
+                ],
+                "soil_temperature_28_to_100cm_lag1": [
+                    "scale_normal"
+                ],
+                "soil_temperature_28_to_100cm_lag7": [
+                    "scale_normal"
+                ],
+                "soil_temperature_28_to_100cm_rollmean3": [
+                    "scale_normal"
+                ],
+                "soil_temperature_28_to_100cm_rollmean7": [
+                    "scale_normal"
+                ],
+                "soil_moisture_100_to_255cm_lag1": [
+                    "scale_normal"
+                ],
+                "soil_moisture_100_to_255cm_lag7": [
+                    "scale_normal"
+                ],
+                "soil_moisture_100_to_255cm_rollmean3": [
+                    "scale_normal"
+                ],
+                "soil_moisture_100_to_255cm_rollmean7": [
+                    "scale_normal"
+                ],
+                "wet_bulb_temperature_2m_lag7": [
+                    "scale_normal"
+                ],
+                "wet_bulb_temperature_2m_rollmean7": [
+                    "scale_normal"
+                ],
+                "total_column_integrated_water_vapour_lag7": [
+                    "scale_normal"
+                ],
+                "is_day_lag7": [
+                    "remove_column"
+                ],
+                "is_day_rollmean7": [
+                    "remove_column"
+                ],
+                "terrestrial_radiation_rollmean7": [
+                    "remove_column"
+                ],
+                "terrestrial_radiation_instant_lag7": [
+                    "remove_column"
+                ],
+                "terrestrial_radiation_instant_rollmean7": [
+                    "remove_column"
+                ]
+            },
+            "target_preprocessing": [
+                "na_exclude",
+                "categorical_to_int"
+            ],
+            "ml_task": "multiclass_classification"
+        },
+        "validation_strategy": {
+            "validation_type": "kfold",
+            "shuffle": true,
+            "stratify": true,
+            "X_path": "AutoML_1/X.data",
+            "y_path": "AutoML_1/y.data",
+            "results_path": "AutoML_1",
+            "k_folds": 10
+        },
+        "learner": {
+            "model_type": "Linear",
+            "ml_task": "multiclass_classification",
+            "n_jobs": -1,
+            "seed": 1235,
+            "num_class": 6,
+            "explain_level": 0
+        },
+        "automl_random_state": 1234,
+        "ml_task": "multiclass_classification",
+        "explain_level": 0,
+        "name": "4_Linear",
+        "status": "initialized",
+        "final_loss": null,
+        "train_time": null,
+        "data_type": "original",
+        "max_time_for_learner": 60
+    },
+    "saved": [
+        "4_Linear/learner_fold_0.linear",
+        "4_Linear/learner_fold_1.linear",
+        "4_Linear/learner_fold_2.linear",
+        "4_Linear/learner_fold_3.linear",
+        "4_Linear/learner_fold_4.linear",
+        "4_Linear/learner_fold_5.linear",
+        "4_Linear/learner_fold_6.linear",
+        "4_Linear/learner_fold_7.linear",
+        "4_Linear/learner_fold_8.linear",
+        "4_Linear/learner_fold_9.linear"
+    ],
+    "predictions_fname": "4_Linear/predictions_out_of_folds.csv",
+    "metric_name": "accuracy",
+    "final_loss": "-0.8260869565217391",
+    "train_time": 7.801459550857544,
+    "is_stacked": false,
+    "joblib_version": "1.4.2"
+}
