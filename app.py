@@ -1,4 +1,3 @@
-# === WINE FORECAST DASHBOARD ===
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,182 +5,157 @@ import joblib
 import json
 import os
 import re
-import seaborn as sns
-import matplotlib.pyplot as plt
-import plotly.express as px
 from pathlib import Path
-from PIL import Image
-from generate_report import generate_wine_report
+from datetime import datetime
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# === ✅ MUST BE FIRST
+# ========== CONFIG ==========
 st.set_page_config(page_title="Wine Quality Forecast", layout="wide")
-
-# === PATHS ===
 BASE_DIR = Path(__file__).parent
-MODELS_DIR = BASE_DIR / "models"
 DATA_DIR = BASE_DIR / "data"
-ASSETS_DIR = BASE_DIR / "assets"
+MODELS_DIR = BASE_DIR / "models"
+SCHEMA_PATH = BASE_DIR / "schema.json"
+METRICS_PATH = BASE_DIR / "metrics.json"
 
-# === LOAD MODEL & METADATA ===
-model = joblib.load(MODELS_DIR / "model.pkl")
-with open(BASE_DIR / "metrics.json") as f: metrics = json.load(f)
-with open(BASE_DIR / "schema.json") as f: schema = json.load(f)
-with open(DATA_DIR / "climate_lookup.json") as f: climate_data = json.load(f)
+# ========== LOAD MODEL + METADATA ==========
+def load_model():
+    return joblib.load(MODELS_DIR / "model.pkl")
 
-# === THEME SWITCHER ===
-theme = st.sidebar.radio("🌓 Theme", ["🌞 Light", "🌚 Dark"])
-primary_color = "#3E7CB1" if theme == "🌞 Light" else "#d4af37"
-bg_color = "#FFFFFF" if theme == "🌞 Light" else "#0E1117"
-text_color = "#000000" if theme == "🌞 Light" else "#FFFFFF"
+def load_schema():
+    with open(SCHEMA_PATH) as f: return json.load(f)
 
-st.markdown(
-    f"""<style>
-        body {{ background-color: {bg_color}; color: {text_color}; }}
-        .stApp {{ background-color: {bg_color}; }}
-    </style>""", unsafe_allow_html=True
-)
+def load_metrics():
+    with open(METRICS_PATH) as f: return json.load(f)
 
-# === CLEAN FEATURE NAMES ===
-def prettify(name):
-    name = name.replace("_", " ")
-    name = re.sub(r'\btemp\b', 'Temperature', name, flags=re.IGNORECASE)
-    name = re.sub(r'\bhum\b', 'Humidity', name, flags=re.IGNORECASE)
-    name = re.sub(r'\bp\b', 'Precipitation', name)
-    name = name.replace("avg", "Average").replace("mean", "Mean").replace("sum", "Sum")
-    return name.title()
+model = load_model()
+schema = load_schema()
+metrics = load_metrics()
 
-# === NAVIGATION ===
-section = st.sidebar.radio("Navigation", [
-    "✦ Project Overview", "⟶ Explore Datasets", "Δ Climate Simulator",
-    "ƒ(x) Predict One Sample", "⤵ Batch Predictions",
-    "✔ Model Evaluation", "Σ Advanced Analytics", "⇩ Export Tools"
+# ========== STYLES ==========
+st.markdown("""
+    <style>
+    .main { background-color: #f9f9f9; }
+    </style>
+""", unsafe_allow_html=True)
+
+# ========== NAVIGATION ==========
+page = st.sidebar.radio("Navigation", [
+    "🏠 Overview", "📂 Explore Data", "📈 Train New Model", 
+    "🔍 Predict Sample", "📊 Advanced Analytics", "⬇️ Export"
 ])
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("ℹ️ _Hover over each section to learn more_")
-st.sidebar.markdown("👨‍💻 App by Baltzakis Themistoklis")
+# ========== CLEAN FEATURE NAMES ==========
+def prettify(name):
+    return name.replace("_", " ").title()
 
-# === 1. PROJECT OVERVIEW ===
-if section == "✦ Project Overview":
-    st.subheader("✦ Project Overview")
-    st.markdown("""
-    This dashboard forecasts wine quality based on climate and chemistry.
-    It uses ML models trained on regional datasets to provide predictions and insights.
-    """)
-    st.markdown("### ✔ Model KPIs")
-    perf_cols = st.columns(3)
-    perf_cols[0].metric("📐 RMSE", f"{metrics.get('rmse', 'N/A'):.3f}")
-    perf_cols[1].metric("📈 R² Score", f"{metrics.get('r2', 'N/A'):.3f}")
-    perf_cols[2].metric("📊 MAE", f"{metrics.get('mae', 'N/A'):.3f}")
-    st.markdown("---")
+# ========== PAGE: OVERVIEW ==========
+if page == "🏠 Overview":
+    st.title("Wine Quality Forecasting Dashboard")
+    st.subheader("🔎 Model Performance")
+    st.metric("R²", f"{metrics['r2']:.3f}")
+    st.metric("RMSE", f"{metrics['rmse']:.3f}")
+    st.metric("MAE", f"{metrics['mae']:.3f}")
+    st.info(f"Trained with {metrics.get('algorithm', 'N/A')}")
 
-# === 2. EXPLORE DATASETS ===
-elif section == "⟶ Explore Datasets":
-    st.subheader("⟶ Explore Datasets")
-    files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv") and not f.startswith("climate")]
-    regions = [f.replace("combined_", "").replace("_filled.csv", "") for f in files]
-    selected = st.multiselect("Select wine regions", regions)
+# ========== PAGE: EXPLORE ==========
+elif page == "📂 Explore Data":
+    st.title("📂 Explore Wine Region Datasets")
+    files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
+    selected = st.selectbox("Choose a dataset", files)
+    if selected:
+        df = pd.read_csv(DATA_DIR / selected)
+        st.dataframe(df.head())
+        st.write("📊 Summary Statistics")
+        st.dataframe(df.describe())
 
-    dfs = []
-    for region in selected:
-        df = pd.read_csv(DATA_DIR / f"combined_{region}_filled.csv")
-        df["Region"] = region
-        dfs.append(df)
+# ========== PAGE: TRAIN NEW ==========
+elif page == "📈 Train New Model":
+    st.title("📈 Train New Model from Dataset")
+    train_file = st.file_uploader("Upload training data", type="csv")
 
-    if dfs:
-        combined_df = pd.concat(dfs, ignore_index=True)
-        st.session_state["combined_df"] = combined_df
-        st.dataframe(combined_df.head())
-        st.markdown("### Summary Statistics")
-        st.dataframe(combined_df.describe())
-    else:
-        st.info("Select one or more regions to view data.")
+    if train_file:
+        df = pd.read_csv(train_file)
+        st.write("Dataset preview", df.head())
+        target = "wine_quality_score"
+        X = df[schema["features"]]
+        y = df[target]
 
-# === 3. CLIMATE SIMULATOR ===
-elif section == "Δ Climate Simulator":
-    st.subheader("Δ Climate Impact Simulator")
-    region = st.selectbox("Choose a wine region", sorted(climate_data.keys()))
-    default = climate_data[region]
-    temp = st.slider("Mean Temperature (°C)", 15.0, 30.0, default["mean_temp"])
-    humidity = st.slider("Relative Humidity (%)", 40.0, 90.0, default["humidity"])
+        if st.button("Train Model"):
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            model = XGBRegressor(n_estimators=100, random_state=42)
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
 
-    st.markdown("#### Climate Insight")
-    if temp > 24 and humidity < 60:
-        st.success("Hot & dry → Higher sugar and alcohol expected.")
-    elif temp < 21 and humidity > 70:
-        st.warning("Cool & humid → Higher acidity, lower alcohol.")
-    else:
-        st.info("Balanced climate — minimal disruption.")
+            # Save versioned model
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            version_name = f"model_{timestamp}.pkl"
+            joblib.dump(model, MODELS_DIR / version_name)
+            joblib.dump(model, MODELS_DIR / "model.pkl")
 
-# === 4. SINGLE PREDICTION ===
-elif section == "ƒ(x) Predict One Sample":
-    st.subheader("ƒ(x) Predict One Sample")
+            # Save metrics
+            new_metrics = {
+                "r2": r2_score(y_test, y_pred),
+                "rmse": np.sqrt(mean_squared_error(y_test, y_pred)),
+                "mae": mean_absolute_error(y_test, y_pred),
+                "algorithm": "XGBoost",
+                "trained_on": timestamp
+            }
+            with open(METRICS_PATH, "w") as f: json.dump(new_metrics, f, indent=2)
+
+            st.success(f"✅ Model trained and saved as {version_name}")
+
+# ========== PAGE: PREDICT ==========
+elif page == "🔍 Predict Sample":
+    st.title("🔍 Predict Wine Quality")
     inputs = {}
     cols = st.columns(3)
     for i, feat in enumerate(schema["features"]):
-        label = prettify(feat)
-        inputs[feat] = cols[i % 3].number_input(label, value=0.0)
-
+        inputs[feat] = cols[i % 3].number_input(prettify(feat), value=0.0)
     if st.button("Predict"):
         input_df = pd.DataFrame([inputs])
-        prediction = model.predict(input_df)[0]
-        st.success(f"Predicted Wine Quality: **{round(prediction, 2)}**")
+        pred = model.predict(input_df)[0]
+        st.success(f"Predicted Wine Quality Score: **{round(pred, 2)}**")
 
-# === 5. BATCH PREDICTIONS ===
-elif section == "⤵ Batch Predictions":
-    st.subheader("⤵ Predict from CSV")
-    file = st.file_uploader("Upload your dataset", type="csv")
-    if file:
-        df = pd.read_csv(file)
-        missing = [col for col in schema["features"] if col not in df.columns]
-        if missing:
-            st.error(f"Missing columns: {missing}")
+# ========== PAGE: ADVANCED ANALYTICS ==========
+elif page == "📊 Advanced Analytics":
+    st.title("📊 Advanced KPI Insights")
+    st.markdown("Correlations with target: `wine_quality_score`")
+
+    files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
+    selected_file = st.selectbox("Choose dataset", files)
+    if selected_file:
+        df = pd.read_csv(DATA_DIR / selected_file)
+        target = "wine_quality_score"
+        if target not in df.columns:
+            st.error(f"Target '{target}' not in dataset.")
         else:
-            df["Predicted_Quality"] = model.predict(df)
-            st.success("✅ Predictions generated")
-            st.dataframe(df.head())
-            csv = df.to_csv(index=False).encode("utf-8")
-            st.download_button("Download Predictions", csv, "wine_predictions.csv")
+            corr = df.corr(numeric_only=True)[target].drop(target).sort_values(key=abs, ascending=False).head(10)
+            st.dataframe(corr.to_frame(name="Correlation with Wine Quality").style.background_gradient(cmap="coolwarm"))
 
-# === 6. MODEL EVALUATION ===
-elif section == "✔ Model Evaluation":
-    st.subheader("✔ Model Visuals")
-    st.image(ASSETS_DIR / "predictions_vs_actuals.png", caption="Prediction vs Actual", use_container_width=True)
-    st.image(ASSETS_DIR / "feature_importance.png", caption="Feature Importance", use_container_width=True)
+            st.subheader("📌 KPI vs Target")
+            top_feat = st.selectbox("Choose KPI", corr.index.tolist())
+            fig, ax = plt.subplots()
+            sns.scatterplot(data=df, x=top_feat, y=target, ax=ax)
+            sns.regplot(data=df, x=top_feat, y=target, ax=ax, scatter=False, color='red')
+            st.pyplot(fig)
 
-# === 7. ADVANCED ANALYTICS ===
-elif section == "Σ Advanced Analytics":
-    st.subheader("Σ KPI Analysis")
-    if "combined_df" not in st.session_state:
-        st.warning("Load data via 'Explore Datasets' first.")
-    else:
-        df = st.session_state["combined_df"]
-        target = schema.get("target", "wine_quality_score")
-        corr = df.corr(numeric_only=True)[target].drop(target).sort_values(key=abs, ascending=False).head(10)
-        tab1, tab2 = st.tabs(["Top KPIs", "Visual Comparison"])
+# ========== PAGE: EXPORT ==========
+elif page == "⬇️ Export":
+    st.title("⬇️ Export Tools")
+    if st.button("Download Model"):
+        with open(MODELS_DIR / "model.pkl", "rb") as f:
+            st.download_button("Download Model File", f.read(), "model.pkl")
+    with open(SCHEMA_PATH) as f:
+        st.download_button("Download Schema", f.read(), "schema.json")
 
-        with tab1:
-            st.dataframe(corr.to_frame(name="Correlation").style.background_gradient(cmap="coolwarm"))
+    metrics_json = json.dumps(metrics, indent=2)
+    st.download_button("Download Metrics", metrics_json, "metrics.json", mime="application/json")
 
-        with tab2:
-            top_feat = st.selectbox("Select KPI", corr.index.tolist())
-            fig = px.scatter(df, x=top_feat, y=target, color="Region", trendline="ols", hover_data=["date"])
-            fig.update_layout(title=f"{top_feat} vs Wine Quality Score")
-            st.plotly_chart(fig, use_container_width=True)
+# ========== FOOTER ==========
+st.sidebar.markdown("---")
+st.sidebar.markdown("👨‍💻 Made by Baltzakis Themistoklis")
 
-# === 8. EXPORT TOOLS ===
-elif section == "⇩ Export Tools":
-    st.subheader("⇩ Export Data and Reports")
-    if "combined_df" in st.session_state:
-        df = st.session_state["combined_df"]
-        st.download_button("Download CSV", df.to_csv(index=False), "wine_dataset.csv")
-
-        template = pd.DataFrame([{feat: 0.0 for feat in schema["features"]}])
-        st.download_button("Download Input Template", template.to_csv(index=False), "input_template.csv")
-
-        if st.button("Generate PDF Report"):
-            report_path = generate_wine_report(df, target=schema.get("target", "wine_quality_score"))
-            with open(report_path, "rb") as f:
-                st.download_button("Download PDF Report", f.read(), file_name="wine_report.pdf", mime="application/pdf")
-    else:
-        st.warning("Please explore datasets first.")
