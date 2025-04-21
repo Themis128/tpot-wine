@@ -1,0 +1,7 @@
+{
+    "r2": 0.8927,
+    "rmse": 0.295,
+    "mae": 0.1821,
+    "task": "forecasting",
+    "algorithm": "XGBoost"
+}
