@@ -1,2 +1,14 @@
-scikit-learn==1.5.2
 xgboost==3.0.0
+
+
+pandas
+numpy
+streamlit
+seaborn
+matplotlib
+scikit-learn
+joblib
+
+
+Pillow
+plotly
