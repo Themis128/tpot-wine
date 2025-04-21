@@ -133,49 +133,40 @@ elif section == "📊 Model Evaluation":
 
 # === 7. ADVANCED ANALYTICS ===
 elif section == "📊 Advanced Analytics":
-    st.subheader("📊 Advanced Data Exploration")
+    st.subheader("📊 Key Performance Insights")
 
     if "combined_df" not in st.session_state:
         st.warning("Please load regions in 'Explore Datasets' first.")
     else:
         df = st.session_state["combined_df"]
         target = schema["target"]
-        tab1, tab2, tab3, tab4 = st.tabs([
-            "📌 Correlation Heatmap", "📈 Quality by Region", "📊 Histogram", "🔁 Target Relationships"
-        ])
 
-        with tab1:
-            st.markdown("### 🔬 Correlation Matrix")
-            corr = df.corr(numeric_only=True)
-            fig, ax = plt.subplots(figsize=(12, 8))
-            sns.heatmap(corr, cmap="coolwarm", annot=False, fmt=".2f", ax=ax)
+        st.markdown("""
+        This section focuses on key metrics related to wine quality.  
+        We analyze **which features influence wine quality the most** using correlation.
+        """)
+
+        # === Top Correlated Features ===
+        st.markdown("### 🔝 Top Features Correlated with Quality")
+
+        corr_matrix = df.corr(numeric_only=True)
+        if target not in corr_matrix.columns:
+            st.error(f"Target column '{target}' not found in correlation matrix.")
+        else:
+            target_corr = corr_matrix[target].drop(target).sort_values(key=abs, ascending=False).head(10)
+            st.dataframe(
+                target_corr.to_frame(name="Correlation with Quality")
+                .style.background_gradient(cmap="coolwarm")
+            )
+
+            # === Feature Explorer ===
+            st.markdown("### 📈 Feature vs Wine Quality")
+            selected_feature = st.selectbox("Select a feature to visualize", target_corr.index.tolist())
+            fig, ax = plt.subplots(figsize=(8, 5))
+            sns.scatterplot(data=df, x=selected_feature, y=target, hue="Region", ax=ax)
             st.pyplot(fig)
 
-        with tab2:
-            st.markdown("### 🍷 Wine Quality by Region")
-            fig2, ax2 = plt.subplots(figsize=(10, 6))
-            sns.boxplot(data=df, x="Region", y=target, ax=ax2)
-            plt.xticks(rotation=45)
-            st.pyplot(fig2)
-
-        with tab3:
-            st.markdown("### 📊 Feature Distribution")
-            feature = st.selectbox("Choose a feature", df.columns[:-2])
-            fig3, ax3 = plt.subplots(figsize=(10, 4))
-            sns.histplot(df[feature], kde=True, ax=ax3, bins=30)
-            st.pyplot(fig3)
-
-        with tab4:
-            st.markdown("### 🔁 Correlation with Target")
-            corr_target = df.corr(numeric_only=True)[target].sort_values(ascending=False)
-            top_corr = corr_target.drop(labels=[target]).head(10)
-            st.dataframe(top_corr.to_frame(name="Correlation").style.background_gradient(cmap="coolwarm"))
-
-            st.markdown("### 🔍 Visualize Top Feature vs Target")
-            top_feat = st.selectbox("Choose feature to plot", top_corr.index.tolist())
-            fig4, ax4 = plt.subplots(figsize=(8, 5))
-            sns.scatterplot(data=df, x=top_feat, y=target, hue="Region", ax=ax4)
-            st.pyplot(fig4)
+            st.markdown(f"🧠 **Insight:** This plot helps show the relationship between `{selected_feature}` and wine quality.")
 
 # === 8. EXPORT TOOLS ===
 elif section == "💾 Export Tools":
