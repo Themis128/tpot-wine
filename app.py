@@ -56,16 +56,52 @@ section = st.sidebar.radio("📚 Choose Section", [
 ])
 
 # === 1. OVERVIEW ===
-if section == "��️ Project Overview":
-    st.subheader("🔍 Project Summary")
-    st.markdown("""
-    This app forecasts wine quality using vineyard weather data and machine learning.
-    Explore datasets, simulate climate scenarios, and make predictions interactively.
-    """)
-    st.markdown("### 📊 Model Performance")
-    st.json(metrics)
+# === 1. OVERVIEW ===
+if section == "🗂️ Project Overview":
+    col1, col2 = st.columns([3, 1])
+
+    with col1:
+        st.subheader("🍇 Welcome to the Wine Quality Forecast App")
+        st.markdown("""
+        This interactive dashboard uses machine learning to **predict wine quality**  
+        based on vineyard **climate data** and **chemical features**.
+
+        🔍 Explore regions, simulate climate scenarios, analyze model KPIs,  
+        and export professional PDF reports — all from one place.
+
+        #### 📊 Highlights:
+        - Predict wine quality (manually or in bulk)
+        - Simulate climate shifts & impact
+        - View top KPIs, feature correlations
+        - Download clean CSVs and PDF reports
+        """)
+
+    with col2:
+        st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Wine_glass_icon.svg/512px-Wine_glass_icon.svg.png", width=150)
+
     st.markdown("---")
-    st.markdown("📌 Created by **Baltzakis Themistoklis**")
+    st.markdown("### 📈 Model Performance Summary")
+
+    perf_cols = st.columns(3)
+    perf_cols[0].metric("📉 RMSE", f"{metrics.get('rmse', 'N/A'):.3f}")
+    perf_cols[1].metric("📈 R² Score", f"{metrics.get('r2', 'N/A'):.3f}")
+    perf_cols[2].metric("📊 MAE", f"{metrics.get('mae', 'N/A'):.3f}")
+
+    st.markdown("---")
+    st.markdown("""
+    ### 🧭 Navigation Guide
+    - **📂 Explore Datasets:** Browse raw features from each vineyard region  
+    - **🌤️ Climate Impact:** Simulate temperature & humidity changes  
+    - **🔮 Predict One Sample:** Enter values manually to test predictions  
+    - **📁 Predict Multiple Samples:** Upload CSVs for batch forecasts  
+    - **📊 Model Evaluation:** See prediction vs actual & feature importance  
+    - **📊 Advanced Analytics:** Correlation & distribution deep dives  
+    - **💾 Export Tools:** Download templates, datasets, PDF reports
+
+    ---
+    👨‍🔬 Developed by **Baltzakis Themistoklis**  
+    [🔗 GitHub Repository](https://github.com/your-profile/your-wine-app)
+    """)
 
 # === 2. DATASET EXPLORER ===
 elif section == "📂 Explore Datasets":
