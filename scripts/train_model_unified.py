@@ -1,13 +1,10 @@
 import os
-import sys
 import pandas as pd
 from datetime import datetime
 import logging
+import argparse
 
-# Add the parent directory to the Python path to locate utils.py
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from utils import preprocess_data, split_and_resample, save_model, infer_task_type
+from utils import preprocess_data, split_and_resample, save_model
 from sklearn.metrics import r2_score, mean_squared_error, accuracy_score
 
 from tpot import TPOTRegressor, TPOTClassifier
@@ -17,7 +14,7 @@ import xgboost as xgb
 from log_utils import setup_logger
 
 # ========== CONFIG ==========
-DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/processed_filled"))
+DATA_DIR = "data/processed_filled"
 OUTPUT_DIR = "models"
 LOG_DIR = "logs"
 MAX_TIME_MINS = 5
@@ -48,7 +45,8 @@ def train_with_tpot(X_train, y_train, X_test, y_test, task):
         max_time_mins=MAX_TIME_MINS,
         cv=5,
         random_state=42,
-        n_jobs=1  # Removed 'verbosity' argument
+        verbosity=2,
+        n_jobs=1
     )
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
@@ -68,21 +66,15 @@ def train_with_xgboost(X_train, y_train, X_test, y_test, task):
 
 # ========== TRAIN RUNNER ==========
 
-def train_all_models_for_file(file_path):
+def train_all_models_for_file(file_path, task):
     region = os.path.basename(file_path).replace("combined_", "").replace("_filled.csv", "")
     df = pd.read_csv(file_path)
     X, y = preprocess_data(df)
-    
-    # Automatically infer task type
-    task = infer_task_type(y)
-    logging.info(f"[{region}] Task inferred as: {task}")
-
     X_train, y_train, X_test, y_test = split_and_resample(X, y)
 
     all_results = []
     
     for trainer in [train_with_tpot, train_with_mljar, train_with_xgboost]:
-        label = None  # Initialize label to avoid UnboundLocalError
         try:
             model, y_pred, label = trainer(X_train, y_train, X_test, y_test, task)
             metrics = {
@@ -101,23 +93,26 @@ def train_all_models_for_file(file_path):
             logging.info(f"[{region}] ✅ {label} model saved: {model_path}")
             all_results.append(metrics)
         except Exception as e:
-            logging.error(f"[{region}] ❌ Failed with {label or 'Unknown'}: {e}")
+            logging.error(f"[{region}] ❌ Failed with {label}: {e}")
     return all_results
 
 # ========== MAIN ==========
 
-def main():
+def main(task):
     setup_logging()
     files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv") and f.startswith("combined_")]
     all_metrics = []
     for f in files:
         full_path = os.path.join(DATA_DIR, f)
-        result = train_all_models_for_file(full_path)
+        result = train_all_models_for_file(full_path, task)
         all_metrics.extend(result)
 
-    out_csv = os.path.join(LOG_DIR, "all_model_results.csv")
+    out_csv = os.path.join(LOG_DIR, f"all_model_results_{task}.csv")
     pd.DataFrame(all_metrics).to_csv(out_csv, index=False)
     logging.info(f"🏁 All model results saved to: {out_csv}")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--task", choices=["regression", "classification"], required=True)
+    args = parser.parse_args()
+    main(args.task)
