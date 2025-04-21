@@ -12,6 +12,9 @@ from pathlib import Path
 from PIL import Image
 from generate_report import generate_wine_report
 
+# === ✅ MUST BE FIRST
+st.set_page_config(page_title="Wine Quality Forecast", layout="wide")
+
 # === PATHS ===
 BASE_DIR = Path(__file__).parent
 MODELS_DIR = BASE_DIR / "models"
@@ -24,13 +27,13 @@ with open(BASE_DIR / "metrics.json") as f: metrics = json.load(f)
 with open(BASE_DIR / "schema.json") as f: schema = json.load(f)
 with open(DATA_DIR / "climate_lookup.json") as f: climate_data = json.load(f)
 
-# === STYLE SWITCHER ===
+# === THEME SWITCHER ===
 theme = st.sidebar.radio("🌓 Theme", ["🌞 Light", "🌚 Dark"])
 primary_color = "#3E7CB1" if theme == "🌞 Light" else "#d4af37"
 bg_color = "#FFFFFF" if theme == "🌞 Light" else "#0E1117"
 text_color = "#000000" if theme == "🌞 Light" else "#FFFFFF"
 
-# === GLOBAL STYLING ===
+# === APPLY STYLE ===
 st.markdown(
     f"""
     <style>
@@ -55,42 +58,31 @@ def prettify(name):
     name = name.replace("avg", "Average").replace("mean", "Mean").replace("sum", "Sum")
     return name.title()
 
-# === PAGE CONFIG ===
-st.set_page_config(page_title="Wine Quality Forecast", layout="wide")
-st.title("Wine Quality & Climate Forecast")
-
-# === SIDEBAR NAVIGATION ===
+# === NAVIGATION ===
 section = st.sidebar.radio("Navigation", [
-    "✦ Project Overview",
-    "⟶ Explore Datasets",
-    "Δ Climate Simulator",
-    "ƒ(x) Predict One Sample",
-    "⤵ Batch Predictions",
-    "✔ Model Evaluation",
-    "Σ Advanced Analytics",
-    "⇩ Export Tools"
+    "✦ Project Overview", "⟶ Explore Datasets", "Δ Climate Simulator",
+    "ƒ(x) Predict One Sample", "⤵ Batch Predictions",
+    "✔ Model Evaluation", "Σ Advanced Analytics", "⇩ Export Tools"
 ])
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("ℹ️ _Hover over each section to learn more_")
 st.sidebar.markdown("👨‍💻 App by Baltzakis Themistoklis")
 
-# === 1. OVERVIEW ===
+# === 1. PROJECT OVERVIEW ===
 if section == "✦ Project Overview":
     st.subheader("✦ Project Overview")
     st.markdown("""
-    This platform leverages machine learning to forecast wine quality  
-    using vineyard-specific climate and chemical characteristics.
-    """)
+    This dashboard forecasts wine quality based on climate and chemistry.
 
+    It uses ML models trained on regional datasets to provide predictions and insights.
+    """)
     st.markdown("### ✔ Model KPIs")
     perf_cols = st.columns(3)
     perf_cols[0].metric("📐 RMSE", f"{metrics.get('rmse', 'N/A'):.3f}")
     perf_cols[1].metric("📈 R² Score", f"{metrics.get('r2', 'N/A'):.3f}")
     perf_cols[2].metric("📊 MAE", f"{metrics.get('mae', 'N/A'):.3f}")
-
     st.markdown("---")
-    st.markdown("✅ Explore data, simulate climate change, and make high-quality predictions.")
 
 # === 2. EXPLORE DATASETS ===
 elif section == "⟶ Explore Datasets":
@@ -122,13 +114,13 @@ elif section == "Δ Climate Simulator":
     temp = st.slider("Mean Temperature (°C)", 15.0, 30.0, default["mean_temp"])
     humidity = st.slider("Relative Humidity (%)", 40.0, 90.0, default["humidity"])
 
-    st.markdown("#### Impact Summary")
+    st.markdown("#### Climate Insight")
     if temp > 24 and humidity < 60:
         st.success("Hot & dry → Higher sugar and alcohol expected.")
     elif temp < 21 and humidity > 70:
         st.warning("Cool & humid → Higher acidity, lower alcohol.")
     else:
-        st.info("Moderate climate — Balanced impact expected.")
+        st.info("Balanced climate — minimal disruption.")
 
 # === 4. SINGLE PREDICTION ===
 elif section == "ƒ(x) Predict One Sample":
@@ -142,12 +134,12 @@ elif section == "ƒ(x) Predict One Sample":
     if st.button("Predict"):
         input_df = pd.DataFrame([inputs])
         prediction = model.predict(input_df)[0]
-        st.success(f"Predicted Wine Quality Score: **{round(prediction, 2)}**")
+        st.success(f"Predicted Wine Quality: **{round(prediction, 2)}**")
 
-# === 5. BATCH PREDICTION ===
+# === 5. BATCH PREDICTIONS ===
 elif section == "⤵ Batch Predictions":
     st.subheader("⤵ Predict from CSV")
-    file = st.file_uploader("Upload your CSV", type="csv")
+    file = st.file_uploader("Upload your dataset", type="csv")
     if file:
         df = pd.read_csv(file)
         missing = [col for col in schema["features"] if col not in df.columns]
@@ -155,10 +147,10 @@ elif section == "⤵ Batch Predictions":
             st.error(f"Missing columns: {missing}")
         else:
             df["Predicted_Quality"] = model.predict(df)
-            st.success("✅ Predictions successful")
+            st.success("✅ Predictions generated")
             st.dataframe(df.head())
             csv = df.to_csv(index=False).encode("utf-8")
-            st.download_button("📥 Download Predictions", csv, "predictions.csv")
+            st.download_button("Download Predictions", csv, "wine_predictions.csv")
 
 # === 6. MODEL EVALUATION ===
 elif section == "✔ Model Evaluation":
@@ -168,35 +160,34 @@ elif section == "✔ Model Evaluation":
 
 # === 7. ADVANCED ANALYTICS ===
 elif section == "Σ Advanced Analytics":
-    st.subheader("Σ Feature Insights")
+    st.subheader("Σ KPI Analysis")
     if "combined_df" not in st.session_state:
-        st.warning("Please load datasets first.")
+        st.warning("Load data via 'Explore Datasets' first.")
     else:
         df = st.session_state["combined_df"]
         target = schema["target"]
-        tab1, tab2 = st.tabs(["Top Correlated Features", "Visualize Feature vs Target"])
+        corr = df.corr(numeric_only=True)[target].drop(target).sort_values(key=abs, ascending=False).head(10)
+        tab1, tab2 = st.tabs(["Top KPIs", "Visual Comparison"])
 
         with tab1:
-            corr = df.corr(numeric_only=True)[target].sort_values(ascending=False)
-            kpis = corr.drop(target).head(10)
-            st.dataframe(kpis.to_frame(name="Correlation").style.background_gradient(cmap="coolwarm"))
+            st.dataframe(corr.to_frame(name="Correlation").style.background_gradient(cmap="coolwarm"))
 
         with tab2:
-            top_feat = st.selectbox("Choose KPI", kpis.index.tolist())
+            top_feat = st.selectbox("Select KPI", corr.index.tolist())
             fig = px.scatter(df, x=top_feat, y=target, color="Region", trendline="ols")
             st.plotly_chart(fig, use_container_width=True)
 
 # === 8. EXPORT TOOLS ===
 elif section == "⇩ Export Tools":
-    st.subheader("⇩ Export Reports and Templates")
+    st.subheader("⇩ Export Data and Reports")
     if "combined_df" in st.session_state:
         df = st.session_state["combined_df"]
-        st.download_button("📥 Download Current Dataset", df.to_csv(index=False), "wine_data.csv")
+        st.download_button("Download CSV", df.to_csv(index=False), "wine_dataset.csv")
         template = pd.DataFrame([{feat: 0.0 for feat in schema["features"]}])
-        st.download_button("📄 Download Input Template", template.to_csv(index=False), "input_template.csv")
-        if st.button("📄 Generate PDF Report"):
+        st.download_button("Download Input Template", template.to_csv(index=False), "input_template.csv")
+        if st.button("Generate PDF Report"):
             report_path = generate_wine_report(df, target=schema["target"])
             with open(report_path, "rb") as f:
-                st.download_button("📥 Download PDF Report", f.read(), file_name="wine_report.pdf", mime="application/pdf")
+                st.download_button("Download PDF Report", f.read(), file_name="wine_report.pdf", mime="application/pdf")
     else:
-        st.warning("Please load datasets first.")
+        st.warning("Please explore datasets first.")
