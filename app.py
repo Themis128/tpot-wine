@@ -7,7 +7,9 @@ import os
 from pathlib import Path
 import seaborn as sns
 import matplotlib.pyplot as plt
+import plotly.express as px
 import re
+from generate_report import generate_wine_report
 
 # === PATHS ===
 BASE_DIR = Path(__file__).parent
@@ -30,6 +32,18 @@ def prettify(name):
     name = name.replace("avg", "Average").replace("mean", "Mean").replace("sum", "Sum")
     return name.title()
 
+# === REGION + DATE INFO DISPLAY ===
+def get_region_date_summary(df: pd.DataFrame) -> str:
+    regions = df["Region"].unique().tolist() if "Region" in df.columns else ["Unknown"]
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        start_date = df["date"].min().date()
+        end_date = df["date"].max().date()
+        date_range = f"{start_date} to {end_date}"
+    else:
+        date_range = "N/A"
+    return f"📍 **Regions:** {', '.join(regions)}  \n🗓️ **Date Range:** {date_range}"
+
 # === PAGE CONFIG ===
 st.set_page_config(page_title="🍷 Wine Forecast Dashboard", layout="wide")
 st.title("🍷 Wine Quality & Climate Forecast")
@@ -42,7 +56,7 @@ section = st.sidebar.radio("📚 Choose Section", [
 ])
 
 # === 1. OVERVIEW ===
-if section == "🗂️ Project Overview":
+if section == "��️ Project Overview":
     st.subheader("🔍 Project Summary")
     st.markdown("""
     This app forecasts wine quality using vineyard weather data and machine learning.
@@ -70,6 +84,7 @@ elif section == "📂 Explore Datasets":
     if dfs:
         combined_df = pd.concat(dfs, ignore_index=True)
         st.session_state["combined_df"] = combined_df
+        st.markdown(get_region_date_summary(combined_df))
         st.dataframe(combined_df.head())
         st.markdown("### 📈 Summary Statistics")
         st.dataframe(combined_df.describe())
@@ -123,7 +138,7 @@ elif section == "📁 Predict Multiple Samples":
             st.success("✅ Predictions generated!")
             st.dataframe(df.head())
             csv = df.to_csv(index=False).encode("utf-8")
-            st.download_button("📥 Download Predictions CSV", csv, "wine_predictions.csv")
+            st.download_button("�� Download Predictions CSV", csv, "wine_predictions.csv")
 
 # === 6. MODEL PERFORMANCE ===
 elif section == "📊 Model Evaluation":
@@ -139,34 +154,43 @@ elif section == "📊 Advanced Analytics":
         st.warning("Please load regions in 'Explore Datasets' first.")
     else:
         df = st.session_state["combined_df"]
+        st.markdown(get_region_date_summary(df))
+
         target = schema["target"]
-
-        st.markdown("""
-        This section focuses on key metrics related to wine quality.  
-        We analyze **which features influence wine quality the most** using correlation.
-        """)
-
-        # === Top Correlated Features ===
-        st.markdown("### 🔝 Top Features Correlated with Quality")
-
         corr_matrix = df.corr(numeric_only=True)
+
         if target not in corr_matrix.columns:
-            st.error(f"Target column '{target}' not found in correlation matrix.")
+            st.error(f"Target column '{target}' not found.")
         else:
             target_corr = corr_matrix[target].drop(target).sort_values(key=abs, ascending=False).head(10)
+
+            st.markdown("### 🔝 Top Features Correlated with Wine Quality")
             st.dataframe(
                 target_corr.to_frame(name="Correlation with Quality")
                 .style.background_gradient(cmap="coolwarm")
             )
 
-            # === Feature Explorer ===
-            st.markdown("### 📈 Feature vs Wine Quality")
-            selected_feature = st.selectbox("Select a feature to visualize", target_corr.index.tolist())
-            fig, ax = plt.subplots(figsize=(8, 5))
-            sns.scatterplot(data=df, x=selected_feature, y=target, hue="Region", ax=ax)
-            st.pyplot(fig)
+            st.markdown("### 📈 Interactive Feature Exploration")
+            selected_feature = st.selectbox("Choose a feature to explore", target_corr.index.tolist())
 
-            st.markdown(f"🧠 **Insight:** This plot helps show the relationship between `{selected_feature}` and wine quality.")
+            # === Scatter + trendline
+            fig = px.scatter(df, x=selected_feature, y=target, color="Region",
+                             title=f"{selected_feature} vs {target}", trendline="ols", template="plotly_white")
+            fig.update_traces(marker=dict(size=8, opacity=0.7))
+            st.plotly_chart(fig, use_container_width=True)
+
+            # === Boxplot
+            st.markdown("### 📦 Distribution by Region")
+            fig2 = px.box(df, x="Region", y=selected_feature, color="Region",
+                          title=f"{selected_feature} by Region", template="plotly_white")
+            st.plotly_chart(fig2, use_container_width=True)
+
+            # === PDF Report Download
+            st.markdown("### 📄 Export as PDF")
+            if st.button("📥 Generate PDF Report"):
+                pdf_path = generate_wine_report(df, target)
+                with open(pdf_path, "rb") as f:
+                    st.download_button("📄 Download PDF Report", f.read(), file_name=pdf_path.name, mime="application/pdf")
 
 # === 8. EXPORT TOOLS ===
 elif section == "💾 Export Tools":
@@ -174,6 +198,7 @@ elif section == "💾 Export Tools":
 
     if "combined_df" in st.session_state:
         df = st.session_state["combined_df"]
+        st.markdown(get_region_date_summary(df))
 
         csv_data = df.to_csv(index=False).encode("utf-8")
         st.download_button("📥 Download Current Dataset", csv_data, "filtered_wine_dataset.csv")
@@ -182,17 +207,6 @@ elif section == "💾 Export Tools":
         corr_target = df.corr(numeric_only=True)[target].sort_values(ascending=False)
         corr_out = corr_target.drop(labels=[target]).to_frame(name="Correlation")
         st.download_button("📥 Download Feature Correlations", corr_out.to_csv().encode("utf-8"), "feature_target_correlations.csv")
-
-        top_feat = corr_out.index[0]
-        fig, ax = plt.subplots(figsize=(8, 5))
-        sns.scatterplot(data=df, x=top_feat, y=target, hue="Region", ax=ax)
-        fig_path = DATA_DIR / "top_feature_vs_quality.png"
-        fig.savefig(fig_path, bbox_inches="tight")
-        with open(fig_path, "rb") as f:
-            st.download_button("🖼️ Download Top Feature Plot", f.read(), "top_feature_vs_quality.png", mime="image/png")
-
-    else:
-        st.warning("Please explore datasets first.")
 
 # === FOOTER ===
 st.sidebar.markdown("---")
