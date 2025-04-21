@@ -1,3 +1,4 @@
+# === WINE FORECAST DASHBOARD ===
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -33,20 +34,11 @@ primary_color = "#3E7CB1" if theme == "🌞 Light" else "#d4af37"
 bg_color = "#FFFFFF" if theme == "🌞 Light" else "#0E1117"
 text_color = "#000000" if theme == "🌞 Light" else "#FFFFFF"
 
-# === APPLY STYLE ===
 st.markdown(
-    f"""
-    <style>
-        body {{
-            background-color: {bg_color};
-            color: {text_color};
-        }}
-        .stApp {{
-            background-color: {bg_color};
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
+    f"""<style>
+        body {{ background-color: {bg_color}; color: {text_color}; }}
+        .stApp {{ background-color: {bg_color}; }}
+    </style>""", unsafe_allow_html=True
 )
 
 # === CLEAN FEATURE NAMES ===
@@ -74,7 +66,6 @@ if section == "✦ Project Overview":
     st.subheader("✦ Project Overview")
     st.markdown("""
     This dashboard forecasts wine quality based on climate and chemistry.
-
     It uses ML models trained on regional datasets to provide predictions and insights.
     """)
     st.markdown("### ✔ Model KPIs")
@@ -165,7 +156,7 @@ elif section == "Σ Advanced Analytics":
         st.warning("Load data via 'Explore Datasets' first.")
     else:
         df = st.session_state["combined_df"]
-        target = schema["target"]
+        target = schema.get("target", "wine_quality_score")
         corr = df.corr(numeric_only=True)[target].drop(target).sort_values(key=abs, ascending=False).head(10)
         tab1, tab2 = st.tabs(["Top KPIs", "Visual Comparison"])
 
@@ -174,7 +165,8 @@ elif section == "Σ Advanced Analytics":
 
         with tab2:
             top_feat = st.selectbox("Select KPI", corr.index.tolist())
-            fig = px.scatter(df, x=top_feat, y=target, color="Region", trendline="ols")
+            fig = px.scatter(df, x=top_feat, y=target, color="Region", trendline="ols", hover_data=["date"])
+            fig.update_layout(title=f"{top_feat} vs Wine Quality Score")
             st.plotly_chart(fig, use_container_width=True)
 
 # === 8. EXPORT TOOLS ===
@@ -183,10 +175,12 @@ elif section == "⇩ Export Tools":
     if "combined_df" in st.session_state:
         df = st.session_state["combined_df"]
         st.download_button("Download CSV", df.to_csv(index=False), "wine_dataset.csv")
+
         template = pd.DataFrame([{feat: 0.0 for feat in schema["features"]}])
         st.download_button("Download Input Template", template.to_csv(index=False), "input_template.csv")
+
         if st.button("Generate PDF Report"):
-            report_path = generate_wine_report(df, target=schema["target"])
+            report_path = generate_wine_report(df, target=schema.get("target", "wine_quality_score"))
             with open(report_path, "rb") as f:
                 st.download_button("Download PDF Report", f.read(), file_name="wine_report.pdf", mime="application/pdf")
     else:
