@@ -11,11 +11,7 @@ joblib
 plotly
 
 # PDF Export (Streamlit Cloud friendly)
-pdfkit
-jinja2
-
-# HTML Template to PDF engine
-wkhtmltopdf
+reportlab
 
 # Image and file handling
 Pillow
