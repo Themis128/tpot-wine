@@ -1,0 +1,70 @@
+{
+    "Amyntaio": {
+        "mean_temp": 20.2,
+        "humidity": 66.5
+    },
+    "Cephalonia": {
+        "mean_temp": 19.2,
+        "humidity": 74.1
+    },
+    "Chania": {
+        "mean_temp": 22.2,
+        "humidity": 69.3
+    },
+    "Drama": {
+        "mean_temp": 19.5,
+        "humidity": 69.3
+    },
+    "Epanomi": {
+        "mean_temp": 23.2,
+        "humidity": 71.8
+    },
+    "Heraklion": {
+        "mean_temp": 24.0,
+        "humidity": 58.2
+    },
+    "Koropi": {
+        "mean_temp": 24.6,
+        "humidity": 67.0
+    },
+    "Lemnos": {
+        "mean_temp": 19.5,
+        "humidity": 63.3
+    },
+    "Mantineia": {
+        "mean_temp": 19.1,
+        "humidity": 61.4
+    },
+    "Messinia": {
+        "mean_temp": 21.3,
+        "humidity": 61.9
+    },
+    "Naoussa": {
+        "mean_temp": 24.7,
+        "humidity": 70.4
+    },
+    "Nemea": {
+        "mean_temp": 24.8,
+        "humidity": 63.8
+    },
+    "Patras": {
+        "mean_temp": 24.0,
+        "humidity": 71.0
+    },
+    "Rapsani": {
+        "mean_temp": 24.5,
+        "humidity": 57.1
+    },
+    "Samos": {
+        "mean_temp": 25.7,
+        "humidity": 60.8
+    },
+    "Santorini": {
+        "mean_temp": 21.1,
+        "humidity": 61.4
+    },
+    "Zitsa": {
+        "mean_temp": 24.7,
+        "humidity": 74.0
+    }
+}
