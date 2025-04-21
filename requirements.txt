@@ -1,14 +1,21 @@
-xgboost==3.0.0
+# Streamlit Web App
+streamlit
 
-
+# Data Science Stack
 pandas
 numpy
-streamlit
-seaborn
-matplotlib
 scikit-learn
+matplotlib
+seaborn
 joblib
-
-
-Pillow
 plotly
+
+# PDF Export (Streamlit Cloud friendly)
+pdfkit
+jinja2
+
+# HTML Template to PDF engine
+wkhtmltopdf
+
+# Image and file handling
+Pillow
