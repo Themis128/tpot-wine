@@ -212,6 +212,7 @@ elif page == "�� Advanced Analytics":
             st.pyplot(fig2)
 
 # ========== PAGE: REPORTS ==========
+# ========== PAGE: REPORTS ==========
 elif page == "📄 Reports":
     st.title("📄 Generate Scientific PDF Report")
     region_map = get_region_file_map()
@@ -223,21 +224,42 @@ elif page == "📄 Reports":
         target = "wine_quality_score"
 
         if target in df.columns:
-            corr_df = df.corr(numeric_only=True)[target].drop(target).to_frame(name="Correlation")
-            top_feat = st.selectbox("Choose Top KPI to Plot", corr_df.dropna().sort_values(by="Correlation", key=abs, ascending=False).index.tolist())
+            # Display region details
+            st.markdown(f"""
+            ### {profile.get('emoji', '')} {selected_region}
+            **Climate:** {profile.get('climate', 'N/A')}
+            **Varietals:** *{profile.get('varietal', 'N/A')}*
+            {profile.get('description', '')}
+            """)
 
+            # Correlation analysis
+            corr_df = df.corr(numeric_only=True)[target].drop(target).to_frame(name="Correlation")
+            top_feat = st.selectbox(
+                "Choose Top KPI to Plot",
+                corr_df.dropna().sort_values(by="Correlation", key=abs, ascending=False).index.tolist()
+            )
+
+            # Scatter plot
             scatter_fig, ax1 = plt.subplots()
             sns.scatterplot(data=df, x=top_feat, y=target, ax=ax1)
             sns.regplot(data=df, x=top_feat, y=target, ax=ax1, scatter=False, color='red')
+            ax1.set_title(f"{top_feat} vs {target}")
+            st.pyplot(scatter_fig)
 
+            # Box plot
             boxplot_fig, ax2 = plt.subplots()
             sns.boxplot(data=df, x=top_feat, ax=ax2)
+            ax2.set_title(f"Distribution of {top_feat}")
+            st.pyplot(boxplot_fig)
 
+            # Additional options
             include_appendix = st.checkbox("Include full correlation matrix (Appendix)", value=False)
             dashboard_url = st.text_input("Streamlit App URL for QR Code", value="https://your-streamlit-app")
 
+            # Region description for the report
             region_description = f"{selected_region} — {profile.get('climate', 'N/A')} region, notable for {profile.get('varietal', 'N/A')}. {profile.get('description', '')}"
 
+            # Generate PDF report
             if st.button("Generate PDF Report"):
                 pdf_path = generate_insight_report(
                     regions=region_description,
@@ -251,7 +273,8 @@ elif page == "📄 Reports":
                 )
                 with open(pdf_path, "rb") as f:
                     st.download_button("Download PDF Report", f, file_name="wine_insight_report.pdf")
-
+        else:
+            st.error(f"Target '{target}' not found in the dataset. Please check the data.")
 # ========== PAGE: EXPORT ==========
 elif page == "⬇️ Export":
     st.title("⬇️ Export Tools")
