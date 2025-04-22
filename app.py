@@ -22,12 +22,15 @@ SCHEMA_PATH = BASE_DIR / "schema.json"
 METRICS_PATH = BASE_DIR / "metrics.json"
 
 # ========== LOAD MODEL + METADATA ==========
+@st.cache_resource
 def load_model():
     return joblib.load(MODELS_DIR / "model.pkl")
 
+@st.cache_data
 def load_schema():
     with open(SCHEMA_PATH) as f: return json.load(f)
 
+@st.cache_data
 def load_metrics():
     with open(METRICS_PATH) as f: return json.load(f)
 
@@ -44,8 +47,8 @@ st.markdown("""
 
 # ========== NAVIGATION ==========
 page = st.sidebar.radio("Navigation", [
-    "🏠 Overview", "📂 Explore Data", "📈 Train New Model", 
-    "🔍 Predict Sample", "📊 Advanced Analytics", "⬇️ Export"
+    "🏠 Overview", "📂 Explore Data", "📈 Train New Model",
+    "🔍 Predict Sample", "📊 Advanced Analytics", "📄 Reports", "⬇️ Export"
 ])
 
 # ========== CLEAN FEATURE NAMES ==========
@@ -64,15 +67,15 @@ if page == "🏠 Overview":
 # ========== PAGE: EXPLORE ==========
 elif page == "📂 Explore Data":
     st.title("📂 Explore Wine Region Datasets")
-    files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
-    selected = st.selectbox("Choose a dataset", files)
+    files = list(DATA_DIR.glob("*.csv"))
+    selected = st.selectbox("Choose a dataset", [f.name for f in files])
     if selected:
         df = pd.read_csv(DATA_DIR / selected)
         st.dataframe(df.head())
         st.write("📊 Summary Statistics")
         st.dataframe(df.describe())
 
-# ========== PAGE: TRAIN NEW ==========
+# ========== PAGE: TRAIN ==========
 elif page == "📈 Train New Model":
     st.title("📈 Train New Model from Dataset")
     train_file = st.file_uploader("Upload training data", type="csv")
@@ -90,13 +93,11 @@ elif page == "📈 Train New Model":
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
 
-            # Save versioned model
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             version_name = f"model_{timestamp}.pkl"
             joblib.dump(model, MODELS_DIR / version_name)
             joblib.dump(model, MODELS_DIR / "model.pkl")
 
-            # Save metrics
             new_metrics = {
                 "r2": r2_score(y_test, y_pred),
                 "rmse": np.sqrt(mean_squared_error(y_test, y_pred)),
@@ -120,13 +121,13 @@ elif page == "🔍 Predict Sample":
         pred = model.predict(input_df)[0]
         st.success(f"Predicted Wine Quality Score: **{round(pred, 2)}**")
 
-# ========== PAGE: ADVANCED ANALYTICS ==========
+# ========== PAGE: ANALYTICS ==========
 elif page == "📊 Advanced Analytics":
     st.title("📊 Advanced KPI Insights")
     st.markdown("Correlations with target: `wine_quality_score`")
 
-    files = [f for f in os.listdir(DATA_DIR) if f.endswith(".csv")]
-    selected_file = st.selectbox("Choose dataset", files)
+    files = list(DATA_DIR.glob("*.csv"))
+    selected_file = st.selectbox("Choose dataset", [f.name for f in files])
     if selected_file:
         df = pd.read_csv(DATA_DIR / selected_file)
         target = "wine_quality_score"
@@ -143,6 +144,42 @@ elif page == "📊 Advanced Analytics":
             sns.regplot(data=df, x=top_feat, y=target, ax=ax, scatter=False, color='red')
             st.pyplot(fig)
 
+            # Save plots for report
+            scatter_path = BASE_DIR / "assets" / "scatter.png"
+            boxplot_path = BASE_DIR / "assets" / "boxplot.png"
+            fig.savefig(scatter_path)
+
+            fig2, ax2 = plt.subplots()
+            sns.boxplot(data=df, x=top_feat, ax=ax2)
+            fig2.savefig(boxplot_path)
+
+# ========== PAGE: REPORTS ==========
+elif page == "📄 Reports":
+    st.title("📄 Generate Insight PDF Report")
+
+    files = list(DATA_DIR.glob("*.csv"))
+    selected_file = st.selectbox("Dataset to summarize", [f.name for f in files])
+    if selected_file:
+        df = pd.read_csv(DATA_DIR / selected_file)
+        target = "wine_quality_score"
+        if target in df.columns:
+            corr_df = df.corr(numeric_only=True)[target].drop(target).to_frame(name="Correlation")
+            from generate_report import generate_insight_report
+
+            scatter_path = BASE_DIR / "assets" / "scatter.png"
+            boxplot_path = BASE_DIR / "assets" / "boxplot.png"
+
+            if st.button("Generate PDF Report"):
+                pdf_path = generate_insight_report(
+                    regions="Ioannina, Ionian Islands",
+                    date_range="2024–2028",
+                    correlation_df=corr_df,
+                    scatter_plot_path=str(scatter_path),
+                    boxplot_path=str(boxplot_path)
+                )
+                with open(pdf_path, "rb") as f:
+                    st.download_button("Download PDF Report", f, file_name="wine_insight_report.pdf")
+
 # ========== PAGE: EXPORT ==========
 elif page == "⬇️ Export":
     st.title("⬇️ Export Tools")
@@ -158,4 +195,3 @@ elif page == "⬇️ Export":
 # ========== FOOTER ==========
 st.sidebar.markdown("---")
 st.sidebar.markdown("👨‍💻 Made by Baltzakis Themistoklis")
-
