@@ -16,3 +16,5 @@ reportlab
 # Image and file handling
 Pillow
 statsmodels
+Jinja2
+pdfkit
