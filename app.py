@@ -22,9 +22,64 @@ MODELS_DIR = BASE_DIR / "models"
 SCHEMA_PATH = BASE_DIR / "schema.json"
 METRICS_PATH = BASE_DIR / "metrics.json"
 
+# ========== REGION PROFILES ==========
+region_profiles = {
+    "Amyntaio": {
+        "description": "Northern Greece's highest-altitude wine region, known for Xinomavro wines.",
+        "climate": "Continental",
+        "varietal": "Xinomavro",
+        "emoji": "🏔️"
+    },
+    "Rapsani": {
+        "description": "Nestled on Mount Olympus, famous for full-bodied red blends.",
+        "climate": "Mountainous Mediterranean",
+        "varietal": "Xinomavro, Krasato, Stavroto",
+        "emoji": "⛰️"
+    },
+    "Santorini": {
+        "description": "Volcanic island producing Assyrtiko with unique minerality.",
+        "climate": "Island",
+        "varietal": "Assyrtiko",
+        "emoji": "🌋"
+    },
+    "Mantineia": {
+        "description": "Peloponnese plateau with cool microclimate for Moschofilero whites.",
+        "climate": "Continental",
+        "varietal": "Moschofilero",
+        "emoji": "��️"
+    },
+    "Nemea": {
+        "description": "Largest red-wine appellation, producing rich Agiorgitiko.",
+        "climate": "Mediterranean",
+        "varietal": "Agiorgitiko",
+        "emoji": "��"
+    },
+    "Naoussa": {
+        "description": "Home of structured Xinomavro with long aging potential.",
+        "climate": "Continental",
+        "varietal": "Xinomavro",
+        "emoji": "🧱"
+    },
+    "Patras": {
+        "description": "Diverse region near the Gulf, known for sweet and dry styles.",
+        "climate": "Mediterranean Coastal",
+        "varietal": "Mavrodaphne, Roditis",
+        "emoji": "🌊"
+    }
+}
+
+def get_region_file_map():
+    files = list(DATA_DIR.glob("*.csv"))
+    def extract_region_name(path):
+        name = path.stem.lower()
+        for word in ["combined", "filled", "-", "_"]:
+            name = name.replace(word, "")
+        return name.strip().title()
+    return {extract_region_name(f): f for f in files}
+
+# ========== LOAD ==========
 @st.cache_resource
-def load_model():
-    return joblib.load(MODELS_DIR / "model.pkl")
+def load_model(): return joblib.load(MODELS_DIR / "model.pkl")
 
 @st.cache_data
 def load_schema():
@@ -34,29 +89,21 @@ def load_schema():
 def load_metrics():
     with open(METRICS_PATH) as f: return json.load(f)
 
-def get_region_file_map():
-    files = list(DATA_DIR.glob("*.csv"))
-    # Extract and clean region names from filenames
-    def extract_region_name(path):
-        name = path.stem.lower()
-        for word in ["combined", "filled", "-", "_"]:
-            name = name.replace(word, "")
-        return name.strip().title()
-
-    return {extract_region_name(f): f for f in files}
-
-# ========== NAVIGATION ==========
-page = st.sidebar.radio("Navigation", [
-    "🏠 Overview", "📂 Explore Data", "📈 Train New Model",
-    "🔍 Predict Sample", "📊 Advanced Analytics", "📄 Reports", "⬇️ Export"
-])
+model = load_model()
+schema = load_schema()
+metrics = load_metrics()
 
 def prettify(name): return name.replace("_", " ").title()
+
+# ========== NAV ==========
+page = st.sidebar.radio("Navigation", [
+    "🏠 Overview", "📂 Explore Data", "📈 Train New Model",
+    "🔍 Predict Sample", "📊 Advanced Analytics", "�� Reports", "⬇️ Export"
+])
 
 # ========== PAGE: OVERVIEW ==========
 if page == "🏠 Overview":
     st.title("Wine Quality Forecasting Dashboard")
-    st.subheader("🔎 Model Performance")
     st.metric("R²", f"{metrics['r2']:.3f}")
     st.metric("RMSE", f"{metrics['rmse']:.3f}")
     st.metric("MAE", f"{metrics['mae']:.3f}")
@@ -70,7 +117,15 @@ elif page == "📂 Explore Data":
     selected_region = st.selectbox("Choose a region", list(region_map.keys()))
     if selected_region:
         df = load_and_clean_csv(region_map[selected_region])
-        st.subheader(f"📍 Data for Region: {selected_region}")
+        profile = region_profiles.get(selected_region, {})
+
+        st.markdown(f"""
+        ### {profile.get('emoji', '')} {selected_region}
+        **Climate:** {profile.get('climate', 'N/A')}  
+        **Varietals:** *{profile.get('varietal', 'N/A')}*
+
+        {profile.get('description', '')}
+        """)
         st.dataframe(df.head())
         st.write("📊 Summary Statistics")
         st.dataframe(df.describe())
@@ -79,7 +134,6 @@ elif page == "📂 Explore Data":
 elif page == "📈 Train New Model":
     st.title("📈 Train New Model from Dataset")
     train_file = st.file_uploader("Upload training data", type="csv")
-
     if train_file:
         df = load_and_clean_csv(train_file)
         st.write("Dataset preview", df.head())
@@ -106,12 +160,11 @@ elif page == "📈 Train New Model":
                 "trained_on": timestamp
             }
             with open(METRICS_PATH, "w") as f: json.dump(new_metrics, f, indent=2)
-
             st.success(f"✅ Model trained and saved as {version_name}")
 
 # ========== PAGE: PREDICT ==========
 elif page == "🔍 Predict Sample":
-    st.title("🔍 Predict Wine Quality")
+    st.title("�� Predict Wine Quality")
     inputs = {}
     cols = st.columns(3)
     for i, feat in enumerate(schema["features"]):
@@ -124,9 +177,8 @@ elif page == "🔍 Predict Sample":
 # ========== PAGE: ANALYTICS ==========
 elif page == "📊 Advanced Analytics":
     st.title("📊 Advanced KPI Insights")
-    st.markdown("Correlations with target: `wine_quality_score`")
-
     region_map = get_region_file_map()
+
     selected_region = st.selectbox("Choose region for analysis", list(region_map.keys()))
     if selected_region:
         df = load_and_clean_csv(region_map[selected_region])
@@ -159,26 +211,26 @@ elif page == "📄 Reports":
     selected_region = st.selectbox("Choose region to analyze", list(region_map.keys()))
     if selected_region:
         df = load_and_clean_csv(region_map[selected_region])
+        profile = region_profiles.get(selected_region, {})
         target = "wine_quality_score"
+
         if target in df.columns:
             corr_df = df.corr(numeric_only=True)[target].drop(target).to_frame(name="Correlation")
-
             top_feat = st.selectbox("Choose Top KPI to Plot", corr_df.dropna().sort_values(by="Correlation", key=abs, ascending=False).index.tolist())
 
             scatter_fig, ax1 = plt.subplots()
             sns.scatterplot(data=df, x=top_feat, y=target, ax=ax1)
             sns.regplot(data=df, x=top_feat, y=target, ax=ax1, scatter=False, color='red')
-            ax1.set_title(f"{top_feat} vs Wine Quality")
 
             boxplot_fig, ax2 = plt.subplots()
             sns.boxplot(data=df, x=top_feat, ax=ax2)
-            ax2.set_title(f"Distribution of {top_feat}")
 
             include_appendix = st.checkbox("Include full correlation matrix (Appendix)", value=False)
             dashboard_url = st.text_input("Streamlit App URL for QR Code", value="https://your-streamlit-app")
 
+            region_description = f"{selected_region} — {profile.get('climate', 'N/A')} region, notable for {profile.get('varietal', 'N/A')}. {profile.get('description', '')}"
+
             if st.button("Generate PDF Report"):
-                region_description = f"{selected_region}"
                 pdf_path = generate_insight_report(
                     regions=region_description,
                     date_range="2024–2028",
