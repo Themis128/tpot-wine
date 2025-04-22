@@ -7,7 +7,20 @@
     "designation": "PDO Amyntaio",
     "registered": "1972",
     "lat": 40.7,
-    "lon": 21.6833
+    "lon": 21.6833,
+    "pgi": [
+      "PGI Macedonia"
+    ],
+    "grape_varieties": {
+      "white": [],
+      "red": [
+        "Roditis"
+      ],
+      "black": [
+        "Xinomavro",
+        "Limnio"
+      ]
+    }
   },
   "Rapsani": {
     "description": "Nestled on Mount Olympus, famous for full-bodied red blends.",
@@ -17,7 +30,19 @@
     "designation": "PDO Rapsani",
     "registered": "1971",
     "lat": 39.95,
-    "lon": 22.5333
+    "lon": 22.5333,
+    "pgi": [
+      "PGI Thessalia"
+    ],
+    "grape_varieties": {
+      "white": [],
+      "red": [],
+      "black": [
+        "Xinomavro",
+        "Krasato",
+        "Stavroto"
+      ]
+    }
   },
   "Santorini": {
     "description": "Volcanic island producing Assyrtiko with unique minerality.",
@@ -27,7 +52,19 @@
     "designation": "PDO Santorini",
     "registered": "1971",
     "lat": 36.3932,
-    "lon": 25.4615
+    "lon": 25.4615,
+    "pgi": [
+      "PGI Cyclades"
+    ],
+    "grape_varieties": {
+      "white": [
+        "Assyrtiko",
+        "Aidani",
+        "Athiri"
+      ],
+      "red": [],
+      "black": []
+    }
   },
   "Mantineia": {
     "description": "Peloponnese plateau with cool microclimate for Moschofilero whites.",
@@ -37,7 +74,17 @@
     "designation": "PDO Mantinia",
     "registered": "1971",
     "lat": 37.6,
-    "lon": 22.3833
+    "lon": 22.3833,
+    "pgi": [
+      "PGI Arkadia"
+    ],
+    "grape_varieties": {
+      "white": [
+        "Moschofilero"
+      ],
+      "red": [],
+      "black": []
+    }
   },
   "Nemea": {
     "description": "Largest red-wine appellation, producing rich Agiorgitiko.",
@@ -57,7 +104,22 @@
     "designation": "PDO Naoussa",
     "registered": "1971",
     "lat": 40.6297,
-    "lon": 22.0689
+    "lon": 22.0689,
+    "pgi": [
+      "PGI Imathia"
+    ],
+    "grape_varieties": {
+      "white": [],
+      "red": [
+        "Roditis"
+      ],
+      "black": [
+        "Xinomavro",
+        "Limnio",
+        "Moschomavro",
+        "Negoska"
+      ]
+    }
   },
   "Patras": {
     "description": "Diverse region near the Gulf, known for sweet and dry styles.",
@@ -67,6 +129,18 @@
     "designation": "PDO Patras",
     "registered": "1971",
     "lat": 38.2466,
-    "lon": 21.7346
+    "lon": 21.7346,
+    "pgi": [
+      "PGI Achaia"
+    ],
+    "grape_varieties": {
+      "white": [
+        "Roditis"
+      ],
+      "red": [],
+      "black": [
+        "Mavrodaphne"
+      ]
+    }
   }
 }
