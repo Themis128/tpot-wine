@@ -18,3 +18,4 @@ Pillow
 statsmodels
 Jinja2
 pdfkit
+xgboost
