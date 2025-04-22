@@ -1,3 +1,4 @@
+
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
@@ -9,6 +10,7 @@ from datetime import date
 from io import BytesIO
 import matplotlib.pyplot as plt
 import pandas as pd
+import qrcode
 
 from kpi_descriptions import kpi_descriptions
 
@@ -49,7 +51,8 @@ def generate_insight_report(
     boxplot_fig,
     metrics: dict,
     output_path: str = "reports/final_kpi_report.pdf",
-    include_appendix: bool = False
+    include_appendix: bool = False,
+    dashboard_url: str = ""
 ) -> str:
     doc = SimpleDocTemplate(output_path, pagesize=A4)
     styles = getSampleStyleSheet()
@@ -85,17 +88,14 @@ def generate_insight_report(
     elements.append(Paragraph("🔬 <b>Top Correlated Features (r ≥ 0.5)</b>", styles['Heading2']))
     table_data = [["Feature", "Correlation", "Description"]] + corr_df_clean.reset_index().values.tolist()
     table = Table(table_data, hAlign="LEFT", colWidths=[150, 80, 240])
-
     row_styles = [('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#d1d1d1")),
                   ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
                   ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
                   ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
                   ('FONTSIZE', (0, 0), (-1, -1), 8)]
-
     for i, row in enumerate(corr_df_clean.itertuples(), start=1):
         row_color = get_row_color(row.Correlation)
         row_styles.append(('BACKGROUND', (0, i), (-1, i), row_color))
-
     table.setStyle(TableStyle(row_styles))
     elements.append(table)
     elements.append(Spacer(1, 20))
@@ -110,7 +110,7 @@ def generate_insight_report(
     elements.append(Image(fig_to_img(boxplot_fig), width=5.5 * inch, height=3.5 * inch))
     elements.append(Spacer(1, 20))
 
-    # Methodology & References
+    # Methodology
     elements.append(PageBreak())
     elements.append(Paragraph("📚 <b>4. Methodology</b>", styles['Heading2']))
     elements.append(Paragraph(
@@ -120,7 +120,6 @@ def generate_insight_report(
         styles['Normal']
     ))
     elements.append(Spacer(1, 12))
-
     elements.append(Paragraph("🔗 <b>5. References</b>", styles['Heading2']))
     elements.append(Paragraph(
         "• Baltzakis, T., 'Wine Quality Forecasting under Climate Variability', 2024<br/>"
@@ -145,6 +144,17 @@ def generate_insight_report(
             ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
         ]))
         elements.append(appendix_table)
+
+    # QR Code if URL provided
+    if dashboard_url:
+        qr_img = qrcode.make(dashboard_url)
+        qr_bytes = BytesIO()
+        qr_img.save(qr_bytes, format="PNG")
+        qr_bytes.seek(0)
+        elements.append(Spacer(1, 24))
+        elements.append(Paragraph("🔗 Streamlit Dashboard Access", styles['Heading2']))
+        elements.append(Image(qr_bytes, width=1.5 * inch, height=1.5 * inch))
+        elements.append(Paragraph(dashboard_url, styles['Normal']))
 
     # Footer
     elements.append(Spacer(1, 30))
