@@ -1,4 +1,3 @@
-
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageBreak
@@ -24,7 +23,10 @@ def fig_to_img(fig) -> BytesIO:
 
 
 def generate_kpi_summary(corr_df: pd.DataFrame) -> str:
-    top_kpis = corr_df.dropna().abs().sort_values(by="Correlation", ascending=False).head(3)
+    corr_df = corr_df.dropna().copy()
+    corr_df["abs_corr"] = corr_df["Correlation"].astype(float).abs()
+    top_kpis = corr_df.sort_values(by="abs_corr", ascending=False).head(3)
+
     summary_lines = []
     for idx, row in top_kpis.iterrows():
         desc = kpi_descriptions.get(idx, "N/A")
@@ -110,7 +112,7 @@ def generate_insight_report(
     elements.append(Image(fig_to_img(boxplot_fig), width=5.5 * inch, height=3.5 * inch))
     elements.append(Spacer(1, 20))
 
-    # Methodology
+    # Methodology & References
     elements.append(PageBreak())
     elements.append(Paragraph("📚 <b>4. Methodology</b>", styles['Heading2']))
     elements.append(Paragraph(
