@@ -1,24 +1,11 @@
-# Streamlit Web App
 streamlit
-
-# Data Science Stack
 pandas
 numpy
-scikit-learn
 matplotlib
 seaborn
+xgboost
+scikit-learn
 joblib
-plotly
-
-# PDF Export (Streamlit Cloud friendly)
-reportlab
-
-# Image and file handling
-Pillow
-statsmodels
-Jinja2
 reportlab
 qrcode
-xgboost
-weasyprint
 Pillow
