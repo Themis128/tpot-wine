@@ -34,6 +34,10 @@ def load_schema():
 def load_metrics():
     with open(METRICS_PATH) as f: return json.load(f)
 
+def get_region_file_map():
+    files = list(DATA_DIR.glob("*.csv"))
+    return {f.stem.replace("_", " ").title(): f for f in files}
+
 model = load_model()
 schema = load_schema()
 metrics = load_metrics()
@@ -56,14 +60,9 @@ if page == "🏠 Overview":
     st.info(f"Trained with {metrics.get('algorithm', 'N/A')}")
 
 # ========== PAGE: EXPLORE ==========
-
-# ========== PAGE: EXPLORE ==========
 elif page == "📂 Explore Data":
     st.title("📂 Explore Wine Region Datasets")
-
-    # Map region names to actual CSV file paths
-    files = list(DATA_DIR.glob("*.csv"))
-    region_map = {f.stem.replace("_", " ").title(): f for f in files}
+    region_map = get_region_file_map()
 
     selected_region = st.selectbox("Choose a region", list(region_map.keys()))
     if selected_region:
@@ -72,11 +71,6 @@ elif page == "📂 Explore Data":
         st.dataframe(df.head())
         st.write("📊 Summary Statistics")
         st.dataframe(df.describe())
-
-
-
-
-
 
 # ========== PAGE: TRAIN ==========
 elif page == "📈 Train New Model":
@@ -129,10 +123,10 @@ elif page == "📊 Advanced Analytics":
     st.title("📊 Advanced KPI Insights")
     st.markdown("Correlations with target: `wine_quality_score`")
 
-    files = list(DATA_DIR.glob("*.csv"))
-    selected_file = st.selectbox("Choose dataset", [f.name for f in files])
-    if selected_file:
-        df = load_and_clean_csv(DATA_DIR / selected_file)
+    region_map = get_region_file_map()
+    selected_region = st.selectbox("Choose region for analysis", list(region_map.keys()))
+    if selected_region:
+        df = load_and_clean_csv(region_map[selected_region])
         target = "wine_quality_score"
         if target not in df.columns:
             st.error(f"Target '{target}' not in dataset.")
@@ -157,18 +151,17 @@ elif page == "📊 Advanced Analytics":
 # ========== PAGE: REPORTS ==========
 elif page == "📄 Reports":
     st.title("📄 Generate Scientific PDF Report")
+    region_map = get_region_file_map()
 
-    files = list(DATA_DIR.glob("*.csv"))
-    selected_file = st.selectbox("Dataset to analyze", [f.name for f in files])
-    if selected_file:
-        df = load_and_clean_csv(DATA_DIR / selected_file)
+    selected_region = st.selectbox("Choose region to analyze", list(region_map.keys()))
+    if selected_region:
+        df = load_and_clean_csv(region_map[selected_region])
         target = "wine_quality_score"
         if target in df.columns:
             corr_df = df.corr(numeric_only=True)[target].drop(target).to_frame(name="Correlation")
 
             top_feat = st.selectbox("Choose Top KPI to Plot", corr_df.dropna().sort_values(by="Correlation", key=abs, ascending=False).index.tolist())
 
-            # Generate plots
             scatter_fig, ax1 = plt.subplots()
             sns.scatterplot(data=df, x=top_feat, y=target, ax=ax1)
             sns.regplot(data=df, x=top_feat, y=target, ax=ax1, scatter=False, color='red')
@@ -178,15 +171,11 @@ elif page == "📄 Reports":
             sns.boxplot(data=df, x=top_feat, ax=ax2)
             ax2.set_title(f"Distribution of {top_feat}")
 
-            # Additional input
             include_appendix = st.checkbox("Include full correlation matrix (Appendix)", value=False)
             dashboard_url = st.text_input("Streamlit App URL for QR Code", value="https://your-streamlit-app")
 
             if st.button("Generate PDF Report"):
-                region_description = (
-                    "Ioannina: A mountainous inland region in northwestern Greece with cool climates ideal for white varietals. "
-                    "Ionian Islands: A cluster of western Greek islands with mild winters and long summers, producing vibrant wines."
-                )
+                region_description = f"{selected_region}"
                 pdf_path = generate_insight_report(
                     regions=region_description,
                     date_range="2024–2028",
