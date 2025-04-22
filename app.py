@@ -56,15 +56,27 @@ if page == "🏠 Overview":
     st.info(f"Trained with {metrics.get('algorithm', 'N/A')}")
 
 # ========== PAGE: EXPLORE ==========
+
+# ========== PAGE: EXPLORE ==========
 elif page == "📂 Explore Data":
     st.title("📂 Explore Wine Region Datasets")
+
+    # Map region names to actual CSV file paths
     files = list(DATA_DIR.glob("*.csv"))
-    selected = st.selectbox("Choose a dataset", [f.name for f in files])
-    if selected:
-        df = load_and_clean_csv(DATA_DIR / selected)
+    region_map = {f.stem.replace("_", " ").title(): f for f in files}
+
+    selected_region = st.selectbox("Choose a region", list(region_map.keys()))
+    if selected_region:
+        df = load_and_clean_csv(region_map[selected_region])
+        st.subheader(f"📍 Data for Region: {selected_region}")
         st.dataframe(df.head())
         st.write("📊 Summary Statistics")
         st.dataframe(df.describe())
+
+
+
+
+
 
 # ========== PAGE: TRAIN ==========
 elif page == "📈 Train New Model":
