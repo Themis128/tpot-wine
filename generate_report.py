@@ -23,11 +23,16 @@ def fig_to_img(fig) -> BytesIO:
 
 
 def generate_kpi_summary(corr_df: pd.DataFrame) -> str:
+    # Clean and convert correlation values
     top_kpis = corr_df.copy()
     top_kpis["Correlation"] = pd.to_numeric(top_kpis["Correlation"], errors="coerce")
     top_kpis = top_kpis.dropna(subset=["Correlation"])
-    top_kpis = top_kpis.reindex(top_kpis["Correlation"].abs().sort_values(ascending=False).index).head(3)
 
+    # Sort by absolute correlation
+    top_kpis["abs_corr"] = top_kpis["Correlation"].abs()
+    top_kpis = top_kpis.sort_values(by="abs_corr", ascending=False).head(3)
+
+    # Format summary
     summary_lines = []
     for idx, row in top_kpis.iterrows():
         desc = kpi_descriptions.get(idx, "N/A")
@@ -35,6 +40,7 @@ def generate_kpi_summary(corr_df: pd.DataFrame) -> str:
         summary_lines.append(
             f"• {idx.replace('_', ' ').title()} ({desc}) — {direction} correlated (r = {row['Correlation']:.3f})"
         )
+
     return "Key climate indicators influencing wine quality include:<br/>" + "<br/>".join(summary_lines)
 
 
