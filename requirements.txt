@@ -18,6 +18,7 @@ Pillow
 statsmodels
 Jinja2
 reportlab
-
+qrcode
 xgboost
 weasyprint
+Pillow
