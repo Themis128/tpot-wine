@@ -218,6 +218,6 @@
         "et0_fao_evapotranspiration_lag2",
         "et0_fao_evapotranspiration_lag3"
     ],
-    "target": "et0_fao_evapotranspiration",
+    "target": "wine_quality_score",
     "task": "forecasting"
 }
