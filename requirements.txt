@@ -17,6 +17,7 @@ reportlab
 Pillow
 statsmodels
 Jinja2
+reportlab
 
 xgboost
 weasyprint

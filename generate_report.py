@@ -1,42 +1,55 @@
-from jinja2 import Environment, FileSystemLoader
-from weasyprint import HTML
-from pathlib import Path
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+from io import BytesIO
 import pandas as pd
+import matplotlib.pyplot as plt
 
-def generate_html_table(df: pd.DataFrame) -> str:
-    """Convert a pandas DataFrame into an HTML table."""
-    return df.to_html(classes='dataframe', border=0, index=True)
+def fig_to_img(fig) -> BytesIO:
+    """Convert a matplotlib figure to an in-memory image buffer."""
+    buf = BytesIO()
+    fig.savefig(buf, format="png", bbox_inches="tight")
+    plt.close(fig)
+    buf.seek(0)
+    return buf
 
 def generate_insight_report(
     regions: str,
     date_range: str,
     correlation_df: pd.DataFrame,
-    scatter_plot_path: str,
-    boxplot_path: str,
-    template_dir: str = "templates",
-    template_name: str = "report_template.html",
-    output_path: str = "reports/insight_report.pdf"
+    scatter_fig,
+    boxplot_fig,
+    output_path: str = "reports/reportlab_report.pdf"
 ) -> str:
-    """Generate a PDF report using HTML template rendering + WeasyPrint."""
-    
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    doc = SimpleDocTemplate(output_path, pagesize=A4)
+    styles = getSampleStyleSheet()
+    elements = []
 
-    # Load Jinja2 template
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template(template_name)
+    elements.append(Paragraph("Wine Quality Insights Report", styles['Title']))
+    elements.append(Spacer(1, 12))
+    elements.append(Paragraph(f"<b>Regions:</b> {regions}", styles['Normal']))
+    elements.append(Paragraph(f"<b>Date Range:</b> {date_range}", styles['Normal']))
+    elements.append(Spacer(1, 12))
 
-    # Prepare the HTML with dynamic content
-    context = {
-        "regions": regions,
-        "date_range": date_range,
-        "correlation_table": generate_html_table(correlation_df),
-        "scatter_plot_path": Path(scatter_plot_path).resolve().as_uri(),
-        "boxplot_path": Path(boxplot_path).resolve().as_uri()
-    }
+    # Correlation Table
+    elements.append(Paragraph("<b>Top Correlated Features</b>", styles['Heading2']))
+    elements.append(Spacer(1, 6))
+    corr_html = correlation_df.to_html(index=True, border=0)
+    elements.append(Paragraph(corr_html, styles['Code']))
+    elements.append(Spacer(1, 12))
 
-    html_content = template.render(context)
+    # Images
+    elements.append(Paragraph("Scatter Plot", styles['Heading2']))
+    elements.append(Image(fig_to_img(scatter_fig), width=5*inch, height=3*inch))
+    elements.append(Spacer(1, 12))
 
-    # Convert HTML to PDF
-    HTML(string=html_content).write_pdf(output_path)
+    elements.append(Paragraph("Box Plot", styles['Heading2']))
+    elements.append(Image(fig_to_img(boxplot_fig), width=5*inch, height=3*inch))
+    elements.append(Spacer(1, 12))
 
-    return str(output_path)
+    elements.append(Paragraph("Generated with ❤️ by Baltzakis Themistoklis", styles['Normal']))
+    doc.build(elements)
+
+    return output_path
+

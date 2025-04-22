@@ -4,7 +4,6 @@ import numpy as np
 import joblib
 import json
 import os
-import re
 from pathlib import Path
 from datetime import datetime
 from sklearn.model_selection import train_test_split
@@ -12,6 +11,9 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+from preprocessing import load_and_clean_csv
+from generate_report import generate_insight_report  # ✅ updated for reportlab
 
 # ========== CONFIG ==========
 st.set_page_config(page_title="Wine Quality Forecast", layout="wide")
@@ -47,11 +49,10 @@ st.markdown("""
 
 # ========== NAVIGATION ==========
 page = st.sidebar.radio("Navigation", [
-    "🏠 Overview", "📂 Explore Data", "📈 Train New Model",
+    "🏠 Overview", "�� Explore Data", "📈 Train New Model",
     "🔍 Predict Sample", "📊 Advanced Analytics", "📄 Reports", "⬇️ Export"
 ])
 
-# ========== CLEAN FEATURE NAMES ==========
 def prettify(name):
     return name.replace("_", " ").title()
 
@@ -70,7 +71,7 @@ elif page == "📂 Explore Data":
     files = list(DATA_DIR.glob("*.csv"))
     selected = st.selectbox("Choose a dataset", [f.name for f in files])
     if selected:
-        df = pd.read_csv(DATA_DIR / selected)
+        df = load_and_clean_csv(DATA_DIR / selected)
         st.dataframe(df.head())
         st.write("📊 Summary Statistics")
         st.dataframe(df.describe())
@@ -81,7 +82,7 @@ elif page == "📈 Train New Model":
     train_file = st.file_uploader("Upload training data", type="csv")
 
     if train_file:
-        df = pd.read_csv(train_file)
+        df = load_and_clean_csv(train_file)
         st.write("Dataset preview", df.head())
         target = "wine_quality_score"
         X = df[schema["features"]]
@@ -129,7 +130,7 @@ elif page == "📊 Advanced Analytics":
     files = list(DATA_DIR.glob("*.csv"))
     selected_file = st.selectbox("Choose dataset", [f.name for f in files])
     if selected_file:
-        df = pd.read_csv(DATA_DIR / selected_file)
+        df = load_and_clean_csv(DATA_DIR / selected_file)
         target = "wine_quality_score"
         if target not in df.columns:
             st.error(f"Target '{target}' not in dataset.")
@@ -144,14 +145,9 @@ elif page == "📊 Advanced Analytics":
             sns.regplot(data=df, x=top_feat, y=target, ax=ax, scatter=False, color='red')
             st.pyplot(fig)
 
-            # Save plots for report
-            scatter_path = BASE_DIR / "assets" / "scatter.png"
-            boxplot_path = BASE_DIR / "assets" / "boxplot.png"
-            fig.savefig(scatter_path)
-
             fig2, ax2 = plt.subplots()
             sns.boxplot(data=df, x=top_feat, ax=ax2)
-            fig2.savefig(boxplot_path)
+            st.pyplot(fig2)
 
 # ========== PAGE: REPORTS ==========
 elif page == "📄 Reports":
@@ -160,22 +156,29 @@ elif page == "📄 Reports":
     files = list(DATA_DIR.glob("*.csv"))
     selected_file = st.selectbox("Dataset to summarize", [f.name for f in files])
     if selected_file:
-        df = pd.read_csv(DATA_DIR / selected_file)
+        df = load_and_clean_csv(DATA_DIR / selected_file)
         target = "wine_quality_score"
         if target in df.columns:
             corr_df = df.corr(numeric_only=True)[target].drop(target).to_frame(name="Correlation")
-            from generate_report import generate_insight_report
 
-            scatter_path = BASE_DIR / "assets" / "scatter.png"
-            boxplot_path = BASE_DIR / "assets" / "boxplot.png"
+            st.subheader("📌 Choose Correlation Variable")
+            top_feat = st.selectbox("Select Feature", corr_df.index.tolist())
+
+            # Create plots
+            scatter_fig, ax1 = plt.subplots()
+            sns.scatterplot(data=df, x=top_feat, y=target, ax=ax1)
+            sns.regplot(data=df, x=top_feat, y=target, ax=ax1, scatter=False, color='red')
+
+            boxplot_fig, ax2 = plt.subplots()
+            sns.boxplot(data=df, x=top_feat, ax=ax2)
 
             if st.button("Generate PDF Report"):
                 pdf_path = generate_insight_report(
                     regions="Ioannina, Ionian Islands",
                     date_range="2024–2028",
                     correlation_df=corr_df,
-                    scatter_plot_path=str(scatter_path),
-                    boxplot_path=str(boxplot_path)
+                    scatter_fig=scatter_fig,
+                    boxplot_fig=boxplot_fig
                 )
                 with open(pdf_path, "rb") as f:
                     st.download_button("Download PDF Report", f, file_name="wine_insight_report.pdf")
