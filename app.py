@@ -108,6 +108,10 @@ if page == "🏠 Overview":
     st.metric("RMSE", f"{metrics['rmse']:.3f}")
     st.metric("MAE", f"{metrics['mae']:.3f}")
     st.info(f"Trained with {metrics.get('algorithm', 'N/A')}")
+    st.write(f"**Trained On:** {metrics.get('trained_on', 'N/A')}")
+    st.write(f"**Dataset:** {metrics.get('dataset', 'N/A')}")
+    st.write(f"**Number of Features:** {metrics.get('num_features', 'N/A')}")
+    st.write(f"**Number of Samples:** {metrics.get('num_samples', 'N/A')}")
 
 # ========== PAGE: EXPLORE ==========
 elif page == "📂 Explore Data":
@@ -121,7 +125,7 @@ elif page == "📂 Explore Data":
 
         st.markdown(f"""
         ### {profile.get('emoji', '')} {selected_region}
-        **Climate:** {profile.get('climate', 'N/A')}  
+        **Climate:** {profile.get('climate', 'N/A')}
         **Varietals:** *{profile.get('varietal', 'N/A')}*
 
         {profile.get('description', '')}
@@ -147,7 +151,7 @@ elif page == "📈 Train New Model":
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
 
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.now().strftime("%Y-%m-%d")
             version_name = f"model_{timestamp}.pkl"
             joblib.dump(model, MODELS_DIR / version_name)
             joblib.dump(model, MODELS_DIR / "model.pkl")
@@ -157,14 +161,18 @@ elif page == "📈 Train New Model":
                 "rmse": np.sqrt(mean_squared_error(y_test, y_pred)),
                 "mae": mean_absolute_error(y_test, y_pred),
                 "algorithm": "XGBoost",
-                "trained_on": timestamp
+                "trained_on": timestamp,
+                "dataset": train_file.name,
+                "num_features": len(schema["features"]),
+                "num_samples": len(df),
+                "description": "Model trained to predict wine quality scores based on features."
             }
             with open(METRICS_PATH, "w") as f: json.dump(new_metrics, f, indent=2)
             st.success(f"✅ Model trained and saved as {version_name}")
 
 # ========== PAGE: PREDICT ==========
 elif page == "🔍 Predict Sample":
-    st.title("�� Predict Wine Quality")
+    st.title("🔍 Predict Wine Quality")
     inputs = {}
     cols = st.columns(3)
     for i, feat in enumerate(schema["features"]):
@@ -175,7 +183,7 @@ elif page == "🔍 Predict Sample":
         st.success(f"Predicted Wine Quality Score: **{round(pred, 2)}**")
 
 # ========== PAGE: ANALYTICS ==========
-elif page == "📊 Advanced Analytics":
+elif page == "�� Advanced Analytics":
     st.title("📊 Advanced KPI Insights")
     region_map = get_region_file_map()
 

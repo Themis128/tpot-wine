@@ -20,5 +20,6 @@ kpi_descriptions = {
     "snowfall": "Accumulated snowfall",
     "vapour_pressure_deficit": "Drying power of air – gap between vapor pressure & saturation",
     "shortwave_radiation": "Solar radiation reaching the surface (W/m²)",
-    "sunshine_duration": "Hours of sunlight per day"
+    "sunshine_duration": "Hours of sunlight per day",
+    "wine_quality_score": "Predicted quality score of wine based on features"
 }
