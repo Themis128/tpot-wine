@@ -10,7 +10,6 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import pandas as pd
 import qrcode
-import os
 
 from kpi_descriptions import kpi_descriptions
 
@@ -24,10 +23,11 @@ def fig_to_img(fig) -> BytesIO:
 
 
 def generate_kpi_summary(corr_df: pd.DataFrame) -> str:
-    corr_df = corr_df[pd.to_numeric(corr_df["Correlation"], errors="coerce").notnull()]
-    corr_df["Correlation"] = corr_df["Correlation"].astype(float)
+    top_kpis = corr_df.copy()
+    top_kpis["Correlation"] = pd.to_numeric(top_kpis["Correlation"], errors="coerce")
+    top_kpis = top_kpis.dropna(subset=["Correlation"])
+    top_kpis = top_kpis.reindex(top_kpis["Correlation"].abs().sort_values(ascending=False).index).head(3)
 
-    top_kpis = corr_df.abs().sort_values(by="Correlation", ascending=False).head(3)
     summary_lines = []
     for idx, row in top_kpis.iterrows():
         desc = kpi_descriptions.get(idx, "N/A")
@@ -59,8 +59,6 @@ def generate_insight_report(
     include_appendix: bool = False,
     dashboard_url: str = ""
 ) -> str:
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
     doc = SimpleDocTemplate(output_path, pagesize=A4)
     styles = getSampleStyleSheet()
     elements = []
@@ -78,8 +76,8 @@ def generate_insight_report(
     elements.append(Spacer(1, 12))
 
     corr_df_clean = correlation_df.dropna().copy()
-    corr_df_clean = corr_df_clean[pd.to_numeric(corr_df_clean["Correlation"], errors="coerce").notnull()]
-    corr_df_clean["Correlation"] = corr_df_clean["Correlation"].astype(float)
+    corr_df_clean["Correlation"] = pd.to_numeric(corr_df_clean["Correlation"], errors="coerce")
+    corr_df_clean = corr_df_clean.dropna(subset=["Correlation"])
     corr_df_clean = corr_df_clean[abs(corr_df_clean["Correlation"]) >= 0.5]
     corr_df_clean = corr_df_clean.sort_values(by="Correlation", key=abs, ascending=False).head(20)
     corr_df_clean["Description"] = corr_df_clean.index.map(lambda x: kpi_descriptions.get(x, "N/A"))
@@ -135,7 +133,9 @@ def generate_insight_report(
     if include_appendix:
         elements.append(PageBreak())
         elements.append(Paragraph("📎 <b>Appendix: Full Correlation Matrix</b>", styles['Heading2']))
-        full_corr = correlation_df.dropna().round(3).sort_values(by="Correlation", key=abs, ascending=False)
+        full_corr = correlation_df.dropna().copy()
+        full_corr["Correlation"] = pd.to_numeric(full_corr["Correlation"], errors="coerce")
+        full_corr = full_corr.dropna()
         appendix_data = [["Feature", "Correlation"]] + full_corr.reset_index().values.tolist()
         appendix_table = Table(appendix_data, colWidths=[300, 100], hAlign="LEFT")
         appendix_table.setStyle(TableStyle([
