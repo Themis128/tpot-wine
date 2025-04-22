@@ -10,9 +10,10 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from kpi_descriptions import kpi_descriptions
+
 
 def fig_to_img(fig) -> BytesIO:
-    """Convert a matplotlib figure to an in-memory image buffer."""
     buf = BytesIO()
     fig.savefig(buf, format="png", bbox_inches="tight")
     plt.close(fig)
@@ -21,13 +22,23 @@ def fig_to_img(fig) -> BytesIO:
 
 
 def generate_kpi_summary(corr_df: pd.DataFrame) -> str:
-    """Generate a summary paragraph of the top 3 correlated KPIs."""
     top_kpis = corr_df.dropna().abs().sort_values(by="Correlation", ascending=False).head(3)
     summary_lines = []
     for idx, row in top_kpis.iterrows():
+        desc = kpi_descriptions.get(idx, "N/A")
         direction = "positively" if row["Correlation"] > 0 else "negatively"
-        summary_lines.append(f"• {idx.replace('_', ' ').title()} — {direction} correlated (r = {row['Correlation']:.3f})")
-    return "Key climate indicators influencing wine quality include:\n" + "\n".join(summary_lines)
+        summary_lines.append(f"• {idx.replace('_', ' ').title()} ({desc}) — {direction} correlated (r = {row['Correlation']:.3f})")
+    return "Key climate indicators influencing wine quality include:<br/>" + "<br/>".join(summary_lines)
+
+
+def get_row_color(value: float):
+    if value >= 0.7:
+        return colors.lightgreen
+    elif value >= 0.5:
+        return colors.beige
+    elif value < 0:
+        return colors.pink
+    return colors.white
 
 
 def generate_insight_report(
@@ -37,7 +48,7 @@ def generate_insight_report(
     scatter_fig,
     boxplot_fig,
     metrics: dict,
-    output_path: str = "reports/final_insight_report.pdf",
+    output_path: str = "reports/final_kpi_report.pdf",
     include_appendix: bool = False
 ) -> str:
     doc = SimpleDocTemplate(output_path, pagesize=A4)
@@ -58,33 +69,38 @@ def generate_insight_report(
     elements.append(Paragraph(f"• MAE: {metrics.get('mae', 0):.3f}", styles['Normal']))
     elements.append(Spacer(1, 12))
 
-    # Filter for KPIs
+    # Clean KPI data
     corr_df_clean = correlation_df.dropna().round(3)
     corr_df_clean = corr_df_clean[abs(corr_df_clean["Correlation"]) >= 0.5]
     corr_df_clean = corr_df_clean.sort_values(by="Correlation", key=abs, ascending=False).head(20)
+    corr_df_clean["Description"] = corr_df_clean.index.map(lambda x: kpi_descriptions.get(x, "N/A"))
 
     # Summary
     elements.append(Paragraph("📌 <b>Summary of Key Drivers</b>", styles['Heading2']))
     summary_text = generate_kpi_summary(corr_df_clean)
-    elements.append(Paragraph(summary_text.replace("\n", "<br/>"), styles['Normal']))
+    elements.append(Paragraph(summary_text, styles['Normal']))
     elements.append(Spacer(1, 12))
 
-    # Table
+    # Table with Description + Color
     elements.append(Paragraph("🔬 <b>Top Correlated Features (r ≥ 0.5)</b>", styles['Heading2']))
-    table_data = [["Feature", "Correlation"]] + corr_df_clean.reset_index().values.tolist()
-    table = Table(table_data, hAlign="LEFT", colWidths=[300, 100])
-    table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#d1d1d1")),
-        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.whitesmoke, colors.lightgrey]),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
-    ]))
+    table_data = [["Feature", "Correlation", "Description"]] + corr_df_clean.reset_index().values.tolist()
+    table = Table(table_data, hAlign="LEFT", colWidths=[150, 80, 240])
+
+    row_styles = [('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#d1d1d1")),
+                  ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+                  ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                  ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
+                  ('FONTSIZE', (0, 0), (-1, -1), 8)]
+
+    for i, row in enumerate(corr_df_clean.itertuples(), start=1):
+        row_color = get_row_color(row.Correlation)
+        row_styles.append(('BACKGROUND', (0, i), (-1, i), row_color))
+
+    table.setStyle(TableStyle(row_styles))
     elements.append(table)
     elements.append(Spacer(1, 20))
 
-    # Visuals
+    # Plots
     elements.append(PageBreak())
     elements.append(Paragraph("📈 <b>Correlation Scatter Plot</b>", styles['Heading2']))
     elements.append(Image(fig_to_img(scatter_fig), width=5.5 * inch, height=3.5 * inch))
@@ -98,38 +114,35 @@ def generate_insight_report(
     elements.append(PageBreak())
     elements.append(Paragraph("📚 <b>4. Methodology</b>", styles['Heading2']))
     elements.append(Paragraph(
-        "This report is based on correlation analysis between meteorological variables and "
-        "wine quality scores collected from regional vineyards. Variables with absolute Pearson correlation ≥ 0.5 "
-        "were considered significant. Visual analysis includes scatter and box plots for top predictors. "
-        "Model performance is assessed using R², RMSE, and MAE.",
+        "This report analyzes the correlation between meteorological variables and wine quality "
+        "using Pearson correlation (r). Features with |r| ≥ 0.5 are considered significant. "
+        "Scatter and box plots visualize relationships with the target variable.",
         styles['Normal']
     ))
     elements.append(Spacer(1, 12))
 
     elements.append(Paragraph("🔗 <b>5. References</b>", styles['Heading2']))
     elements.append(Paragraph(
-        "• Baltzakis, T. et al., 'Wine Quality Forecasting under Climate Variability', 2024<br/>"
-        "• Scikit-learn documentation — https://scikit-learn.org<br/>"
-        "• XGBoost documentation — https://xgboost.readthedocs.io<br/>"
-        "• ReportLab — https://www.reportlab.com/",
+        "• Baltzakis, T., 'Wine Quality Forecasting under Climate Variability', 2024<br/>"
+        "• scikit-learn documentation<br/>"
+        "• XGBoost documentation<br/>"
+        "• ReportLab documentation",
         styles['Normal']
     ))
-    elements.append(Spacer(1, 24))
 
     # Optional Appendix
     if include_appendix:
         elements.append(PageBreak())
         elements.append(Paragraph("📎 <b>Appendix: Full Correlation Matrix</b>", styles['Heading2']))
         full_corr = correlation_df.dropna().round(3).sort_values(by="Correlation", key=abs, ascending=False)
-        table_data_full = [["Feature", "Correlation"]] + full_corr.reset_index().values.tolist()
-        appendix_table = Table(table_data_full, hAlign="LEFT", colWidths=[300, 100])
+        appendix_data = [["Feature", "Correlation"]] + full_corr.reset_index().values.tolist()
+        appendix_table = Table(appendix_data, colWidths=[300, 100], hAlign="LEFT")
         appendix_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#e8e8e8")),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#f0f0f0")),
             ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.whitesmoke, colors.lightgrey]),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
             ('FONTSIZE', (0, 0), (-1, -1), 8),
+            ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
         ]))
         elements.append(appendix_table)
 
