@@ -23,16 +23,24 @@ def fig_to_img(fig) -> BytesIO:
 
 
 def generate_kpi_summary(corr_df: pd.DataFrame) -> str:
-    corr_df = corr_df.dropna().copy()
-    corr_df["abs_corr"] = corr_df["Correlation"].astype(float).abs()
-    top_kpis = corr_df.sort_values(by="abs_corr", ascending=False).head(3)
+    df = corr_df.copy()
+    df["Correlation"] = pd.to_numeric(df["Correlation"], errors="coerce")
+    df = df.dropna(subset=["Correlation"])
+    df["abs_corr"] = df["Correlation"].abs()
+    top_kpis = df.sort_values(by="abs_corr", ascending=False).head(3)
 
-    summary_lines = []
+    lines = []
     for idx, row in top_kpis.iterrows():
-        desc = kpi_descriptions.get(idx, "N/A")
+        kpi_info = kpi_descriptions.get(idx, {})
+        desc = kpi_info.get("description", "N/A")
+        unit = kpi_info.get("unit", "")
+        normal = kpi_info.get("normal_range", "")
         direction = "positively" if row["Correlation"] > 0 else "negatively"
-        summary_lines.append(f"• {idx.replace('_', ' ').title()} ({desc}) — {direction} correlated (r = {row['Correlation']:.3f})")
-    return "Key climate indicators influencing wine quality include:<br/>" + "<br/>".join(summary_lines)
+        lines.append(
+            f"• {idx.replace('_', ' ').title()} ({desc}) — {direction} correlated "
+            f"(r = {row['Correlation']:.3f}, normal: {normal}, unit: {unit})"
+        )
+    return "Key climate indicators influencing wine quality include:<br/>" + "<br/>".join(lines)
 
 
 def get_row_color(value: float):
@@ -60,49 +68,53 @@ def generate_insight_report(
     styles = getSampleStyleSheet()
     elements = []
 
-    # Title
     elements.append(Paragraph("📘 <b>Wine Quality Insights Report</b>", styles['Title']))
     elements.append(Spacer(1, 12))
     elements.append(Paragraph(f"<b>Analyzed Regions:</b> {regions}", styles['Normal']))
     elements.append(Paragraph(f"<b>Date Range:</b> {date_range}", styles['Normal']))
     elements.append(Spacer(1, 12))
 
-    # Model Metrics
     elements.append(Paragraph("📐 <b>Model Performance Metrics</b>", styles['Heading2']))
     elements.append(Paragraph(f"• R² Score: {metrics.get('r2', 0):.3f}", styles['Normal']))
     elements.append(Paragraph(f"• RMSE: {metrics.get('rmse', 0):.3f}", styles['Normal']))
     elements.append(Paragraph(f"• MAE: {metrics.get('mae', 0):.3f}", styles['Normal']))
     elements.append(Spacer(1, 12))
 
-    # Clean KPI data
-    corr_df_clean = correlation_df.dropna().round(3)
-    corr_df_clean = corr_df_clean[abs(corr_df_clean["Correlation"]) >= 0.5]
-    corr_df_clean = corr_df_clean.sort_values(by="Correlation", key=abs, ascending=False).head(20)
-    corr_df_clean["Description"] = corr_df_clean.index.map(lambda x: kpi_descriptions.get(x, "N/A"))
+    corr_df = correlation_df.dropna().copy()
+    corr_df["Correlation"] = pd.to_numeric(corr_df["Correlation"], errors="coerce")
+    corr_df = corr_df.dropna(subset=["Correlation"])
+    corr_df = corr_df[abs(corr_df["Correlation"]) >= 0.5]
+    corr_df = corr_df.sort_values(by="Correlation", key=abs, ascending=False).head(20)
 
-    # Summary
     elements.append(Paragraph("📌 <b>Summary of Key Drivers</b>", styles['Heading2']))
-    summary_text = generate_kpi_summary(corr_df_clean)
-    elements.append(Paragraph(summary_text, styles['Normal']))
+    elements.append(Paragraph(generate_kpi_summary(corr_df), styles['Normal']))
     elements.append(Spacer(1, 12))
 
-    # Table with Description + Color
     elements.append(Paragraph("🔬 <b>Top Correlated Features (r ≥ 0.5)</b>", styles['Heading2']))
-    table_data = [["Feature", "Correlation", "Description"]] + corr_df_clean.reset_index().values.tolist()
-    table = Table(table_data, hAlign="LEFT", colWidths=[150, 80, 240])
-    row_styles = [('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#d1d1d1")),
-                  ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                  ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                  ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
-                  ('FONTSIZE', (0, 0), (-1, -1), 8)]
-    for i, row in enumerate(corr_df_clean.itertuples(), start=1):
-        row_color = get_row_color(row.Correlation)
-        row_styles.append(('BACKGROUND', (0, i), (-1, i), row_color))
-    table.setStyle(TableStyle(row_styles))
+    table_data = [["Feature", "Correlation", "Description", "Unit", "Normal Range"]]
+
+    for idx, row in corr_df.iterrows():
+        kpi = kpi_descriptions.get(idx, {})
+        desc = kpi.get("description", "N/A")
+        unit = kpi.get("unit", "—")
+        normal = kpi.get("normal_range", "—")
+        table_data.append([idx.replace("_", " "), f"{row['Correlation']:.3f}", desc, unit, normal])
+
+    table = Table(table_data, colWidths=[140, 70, 180, 50, 70])
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#d1d1d1")),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('GRID', (0, 0), (-1, -1), 0.25, colors.grey),
+        ('FONTSIZE', (0, 0), (-1, -1), 8)
+    ])
+    for i, row in enumerate(corr_df.itertuples(), start=1):
+        style.add('BACKGROUND', (0, i), (-1, i), get_row_color(row.Correlation))
+    table.setStyle(style)
+
     elements.append(table)
     elements.append(Spacer(1, 20))
 
-    # Plots
     elements.append(PageBreak())
     elements.append(Paragraph("📈 <b>Correlation Scatter Plot</b>", styles['Heading2']))
     elements.append(Image(fig_to_img(scatter_fig), width=5.5 * inch, height=3.5 * inch))
@@ -112,7 +124,6 @@ def generate_insight_report(
     elements.append(Image(fig_to_img(boxplot_fig), width=5.5 * inch, height=3.5 * inch))
     elements.append(Spacer(1, 20))
 
-    # Methodology & References
     elements.append(PageBreak())
     elements.append(Paragraph("📚 <b>4. Methodology</b>", styles['Heading2']))
     elements.append(Paragraph(
@@ -122,6 +133,7 @@ def generate_insight_report(
         styles['Normal']
     ))
     elements.append(Spacer(1, 12))
+
     elements.append(Paragraph("🔗 <b>5. References</b>", styles['Heading2']))
     elements.append(Paragraph(
         "• Baltzakis, T., 'Wine Quality Forecasting under Climate Variability', 2024<br/>"
@@ -131,12 +143,13 @@ def generate_insight_report(
         styles['Normal']
     ))
 
-    # Optional Appendix
     if include_appendix:
         elements.append(PageBreak())
         elements.append(Paragraph("📎 <b>Appendix: Full Correlation Matrix</b>", styles['Heading2']))
-        full_corr = correlation_df.dropna().round(3).sort_values(by="Correlation", key=abs, ascending=False)
-        appendix_data = [["Feature", "Correlation"]] + full_corr.reset_index().values.tolist()
+        appendix_df = correlation_df.copy()
+        appendix_df["Correlation"] = pd.to_numeric(appendix_df["Correlation"], errors="coerce")
+        appendix_df = appendix_df.dropna()
+        appendix_data = [["Feature", "Correlation"]] + appendix_df.reset_index().values.tolist()
         appendix_table = Table(appendix_data, colWidths=[300, 100], hAlign="LEFT")
         appendix_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#f0f0f0")),
@@ -147,7 +160,6 @@ def generate_insight_report(
         ]))
         elements.append(appendix_table)
 
-    # QR Code if URL provided
     if dashboard_url:
         qr_img = qrcode.make(dashboard_url)
         qr_bytes = BytesIO()
@@ -158,9 +170,8 @@ def generate_insight_report(
         elements.append(Image(qr_bytes, width=1.5 * inch, height=1.5 * inch))
         elements.append(Paragraph(dashboard_url, styles['Normal']))
 
-    # Footer
     elements.append(Spacer(1, 30))
-    elements.append(Paragraph(f"🧑‍🔬 Report generated by Baltzakis Themistoklis", styles['Normal']))
+    elements.append(Paragraph("🧑‍🔬 Report generated by Baltzakis Themistoklis", styles['Normal']))
     elements.append(Paragraph(f"📅 Date: {date.today().isoformat()}", styles['Normal']))
 
     doc.build(elements)
