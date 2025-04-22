@@ -36,11 +36,14 @@ def load_metrics():
 
 def get_region_file_map():
     files = list(DATA_DIR.glob("*.csv"))
-    return {f.stem.replace("_", " ").title(): f for f in files}
+    # Extract and clean region names from filenames
+    def extract_region_name(path):
+        name = path.stem.lower()
+        for word in ["combined", "filled", "-", "_"]:
+            name = name.replace(word, "")
+        return name.strip().title()
 
-model = load_model()
-schema = load_schema()
-metrics = load_metrics()
+    return {extract_region_name(f): f for f in files}
 
 # ========== NAVIGATION ==========
 page = st.sidebar.radio("Navigation", [
