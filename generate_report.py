@@ -1,10 +1,10 @@
 from jinja2 import Environment, FileSystemLoader
-import pdfkit
+from weasyprint import HTML
 from pathlib import Path
 import pandas as pd
 
 def generate_html_table(df: pd.DataFrame) -> str:
-    """Convert a pandas DataFrame into an HTML table for the report."""
+    """Convert a pandas DataFrame into an HTML table."""
     return df.to_html(classes='dataframe', border=0, index=True)
 
 def generate_insight_report(
@@ -17,28 +17,26 @@ def generate_insight_report(
     template_name: str = "report_template.html",
     output_path: str = "reports/insight_report.pdf"
 ) -> str:
-    """Generate a PDF insight report from a template and context."""
-
-    # Ensure output directory exists
+    """Generate a PDF report using HTML template rendering + WeasyPrint."""
+    
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 
-    # Setup Jinja2 environment
+    # Load Jinja2 template
     env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template(template_name)
 
-    # Render context for HTML
+    # Prepare the HTML with dynamic content
     context = {
         "regions": regions,
         "date_range": date_range,
         "correlation_table": generate_html_table(correlation_df),
-        "scatter_plot_path": Path(scatter_plot_path).resolve(),
-        "boxplot_path": Path(boxplot_path).resolve()
+        "scatter_plot_path": Path(scatter_plot_path).resolve().as_uri(),
+        "boxplot_path": Path(boxplot_path).resolve().as_uri()
     }
 
-    # Render the HTML template
     html_content = template.render(context)
 
-    # Render PDF from HTML
-    pdfkit.from_string(html_content, output_path)
+    # Convert HTML to PDF
+    HTML(string=html_content).write_pdf(output_path)
 
     return str(output_path)
