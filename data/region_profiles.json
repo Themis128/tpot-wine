@@ -1,0 +1,72 @@
+{
+  "Amyntaio": {
+    "description": "Northern Greece's highest-altitude wine region, known for Xinomavro wines.",
+    "climate": "Continental",
+    "varietal": "Xinomavro",
+    "emoji": "🏔️",
+    "designation": "PDO Amyntaio",
+    "registered": "1972",
+    "lat": 40.7,
+    "lon": 21.6833
+  },
+  "Rapsani": {
+    "description": "Nestled on Mount Olympus, famous for full-bodied red blends.",
+    "climate": "Mountainous Mediterranean",
+    "varietal": "Xinomavro, Krasato, Stavroto",
+    "emoji": "⛰️",
+    "designation": "PDO Rapsani",
+    "registered": "1971",
+    "lat": 39.95,
+    "lon": 22.5333
+  },
+  "Santorini": {
+    "description": "Volcanic island producing Assyrtiko with unique minerality.",
+    "climate": "Island",
+    "varietal": "Assyrtiko",
+    "emoji": "🌋",
+    "designation": "PDO Santorini",
+    "registered": "1971",
+    "lat": 36.3932,
+    "lon": 25.4615
+  },
+  "Mantineia": {
+    "description": "Peloponnese plateau with cool microclimate for Moschofilero whites.",
+    "climate": "Continental",
+    "varietal": "Moschofilero",
+    "emoji": "🌸",
+    "designation": "PDO Mantinia",
+    "registered": "1971",
+    "lat": 37.6,
+    "lon": 22.3833
+  },
+  "Nemea": {
+    "description": "Largest red-wine appellation, producing rich Agiorgitiko.",
+    "climate": "Mediterranean",
+    "varietal": "Agiorgitiko",
+    "emoji": "🍇",
+    "designation": "PDO Nemea",
+    "registered": "1971",
+    "lat": 37.8167,
+    "lon": 22.6667
+  },
+  "Naoussa": {
+    "description": "Home of structured Xinomavro with long aging potential.",
+    "climate": "Continental",
+    "varietal": "Xinomavro",
+    "emoji": "🧱",
+    "designation": "PDO Naoussa",
+    "registered": "1971",
+    "lat": 40.6297,
+    "lon": 22.0689
+  },
+  "Patras": {
+    "description": "Diverse region near the Gulf, known for sweet and dry styles.",
+    "climate": "Mediterranean Coastal",
+    "varietal": "Mavrodaphne, Roditis",
+    "emoji": "🌊",
+    "designation": "PDO Patras",
+    "registered": "1971",
+    "lat": 38.2466,
+    "lon": 21.7346
+  }
+}
