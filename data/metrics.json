@@ -1,0 +1,12 @@
+{
+    "r2": 0.8927,
+    "rmse": 0.295,
+    "mae": 0.1821,
+    "task": "forecasting",
+    "algorithm": "XGBoost",
+    "trained_on": "2025-04-22",
+    "dataset": "combined_wine_quality.csv",
+    "num_features": 120,
+    "num_samples": 1500,
+    "description": "Model trained to predict wine quality scores based on weather and soil data."
+}
