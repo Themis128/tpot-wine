@@ -7,5 +7,5 @@ xgboost
 scikit-learn
 joblib
 reportlab
-qrcode
+qrcode[pil]
 Pillow
